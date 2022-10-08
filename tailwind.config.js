@@ -14,6 +14,10 @@ module.exports = {
       ...colors,
     },
     extend: {
+      colors: {
+        wellfedPrimaryBlue: "#0094a3",
+        wellfedPrimaryGreen: "#006837",
+      },
       minHeight: {
         "screen-75": "75vh",
       },
