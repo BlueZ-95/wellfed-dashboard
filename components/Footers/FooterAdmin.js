@@ -9,12 +9,12 @@ export default function FooterAdmin() {
           <div className="flex flex-wrap items-center md:justify-between justify-center">
             <div className="w-full md:w-4/12 px-4">
               <div className="text-sm text-blueGray-500 font-semibold py-1 text-center md:text-left">
-                Copyright © {new Date().getFullYear()}{" "}
+                Copyright © {new Date().getFullYear()} Well Fed Seminars, Inc. |{" "}
                 <a
-                  href="https://www.creative-tim.com?ref=nnjs-footer-admin"
-                  className="text-blueGray-500 hover:text-blueGray-700 text-sm font-semibold py-1"
+                  href="https://www.thermedia.in"
+                  className="text-red-700 hover:text-blueGray-500 text-sm font-semibold py-1"
                 >
-                  Creative Tim
+                  R Media
                 </a>
               </div>
             </div>
@@ -22,34 +22,26 @@ export default function FooterAdmin() {
               <ul className="flex flex-wrap list-none md:justify-end  justify-center">
                 <li>
                   <a
-                    href="https://www.creative-tim.com?ref=nnjs-footer-admin"
-                    className="text-blueGray-600 hover:text-blueGray-800 text-sm font-semibold block py-1 px-3"
+                    href="https://www.creative-tim.com?ref=nnjs-footer-small"
+                    className="text-blueGray-500 hover:text-blueGray-300 text-sm font-semibold block py-1 px-3"
                   >
-                    Creative Tim
+                    Privacy Policy
                   </a>
                 </li>
                 <li>
                   <a
-                    href="https://www.creative-tim.com/presentation?ref=nnjs-footer-admin"
-                    className="text-blueGray-600 hover:text-blueGray-800 text-sm font-semibold block py-1 px-3"
+                    href="https://www.creative-tim.com/presentation?ref=nnjs-footer-small"
+                    className="text-blueGray-500 hover:text-blueGray-300 text-sm font-semibold block py-1 px-3"
                   >
-                    About Us
+                    Refund Policy
                   </a>
                 </li>
                 <li>
                   <a
-                    href="http://blog.creative-tim.com?ref=nnjs-footer-admin"
-                    className="text-blueGray-600 hover:text-blueGray-800 text-sm font-semibold block py-1 px-3"
+                    href="http://blog.creative-tim.com?ref=nnjs-footer-small"
+                    className="text-blueGray-500 hover:text-blueGray-300 text-sm font-semibold block py-1 px-3"
                   >
-                    Blog
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://github.com/creativetimofficial/notus-nextjs/blob/main/LICENSE.md?ref=nnjs-footer-admin"
-                    className="text-blueGray-600 hover:text-blueGray-800 text-sm font-semibold block py-1 px-3"
-                  >
-                    MIT License
+                    Terms & Conditions
                   </a>
                 </li>
               </ul>
