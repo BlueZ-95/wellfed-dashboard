@@ -17,8 +17,8 @@ import consumerData from "mocks/consumer.mock";
 export default function Dashboard() {
   return (
     <>
-      <div className="flex flex-wrap mt-4">
-        <div className="w-full  mb-12 xl:mb-0 px-4">
+      <div className="flex flex-wrap">
+        <div className="w-full mb-12 xl:mb-0 px-4">
           {consumerData && (
             <Table columns={consumerData.columns} data={consumerData.courses} />
           )}

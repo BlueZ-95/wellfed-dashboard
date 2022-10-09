@@ -33,7 +33,6 @@ html {
 html {
   line-height: 1.15; /* 1 */
   -webkit-text-size-adjust: 100%; /* 2 */
-  background-color: #f1f5f9;
 }
 
 /*
@@ -1337,11 +1336,6 @@ select {
   background-color: rgba(0, 104, 55, var(--tw-bg-opacity));
 }
 
-.hover\:bg-wellfedPrimaryGreen:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgba(0, 104, 55, var(--tw-bg-opacity));
-}
-
 .focus\:bg-white:focus {
   --tw-bg-opacity: 1;
   background-color: rgba(255, 255, 255, var(--tw-bg-opacity));
@@ -2068,10 +2062,6 @@ select {
   line-height: 1;
 }
 
-.leading-snug {
-  line-height: 1.375;
-}
-
 .leading-normal {
   line-height: 1.5;
 }
@@ -2160,10 +2150,6 @@ select {
 
 .mt-0 {
   margin-top: 0px;
-}
-
-.mr-0 {
-  margin-right: 0px;
 }
 
 .mb-0 {
@@ -2523,6 +2509,11 @@ select {
   padding-bottom: 2rem;
 }
 
+.px-8 {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
 .py-10 {
   padding-top: 2.5rem;
   padding-bottom: 2.5rem;
@@ -2850,6 +2841,11 @@ select {
 .text-red-500 {
   --tw-text-opacity: 1;
   color: rgba(239, 68, 68, var(--tw-text-opacity));
+}
+
+.text-red-600 {
+  --tw-text-opacity: 1;
+  color: rgba(220, 38, 38, var(--tw-text-opacity));
 }
 
 .text-red-700 {
@@ -3405,6 +3401,10 @@ select {
     margin-bottom: 1rem;
   }
 
+  .md\:ml-64 {
+    margin-left: 16rem;
+  }
+
   .md\:max-w-4xl {
     max-width: 56rem;
   }
@@ -3432,10 +3432,6 @@ select {
   .md\:px-10 {
     padding-left: 2.5rem;
     padding-right: 2.5rem;
-  }
-
-  .md\:pb-2 {
-    padding-bottom: 0.5rem;
   }
 
   .md\:pt-32 {
