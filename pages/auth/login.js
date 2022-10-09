@@ -15,7 +15,7 @@ export default function Login() {
             <Image
               src="/img/brand/well-fed-logo.png"
               width="100%"
-              height="100%"
+              height="40%"
               layout="responsive"
               objectFit="contain"
             />
@@ -50,7 +50,7 @@ export default function Login() {
                     />
                   </div>
                   <div>
-                    <label className="inline-flex items-center cursor-pointer">
+                    <label className="inline-flex items-center cursor-pointer mt-3">
                       <input
                         id="customCheckLogin"
                         type="checkbox"

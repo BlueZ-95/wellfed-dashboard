@@ -9,7 +9,7 @@ export default function FooterAdmin() {
           <div className="flex flex-wrap items-center md:justify-between justify-center">
             <div className="w-full md:w-4/12 px-4">
               <div className="text-sm text-blueGray-500 font-semibold py-1 text-center md:text-left">
-                Copyright © {new Date().getFullYear()} Well Fed Seminars, Inc. |{" "}
+                © {new Date().getFullYear()} Well Fed Seminars, Inc. |{" "}
                 <a
                   href="https://www.thermedia.in"
                   className="text-red-700 hover:text-blueGray-500 text-sm font-semibold py-1"
