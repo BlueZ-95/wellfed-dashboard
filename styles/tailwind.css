@@ -2005,6 +2005,10 @@ select {
   height: 100%;
 }
 
+.h-screen {
+  height: 100vh;
+}
+
 .h-350-px {
   height: 350px;
 }
@@ -2242,6 +2246,10 @@ select {
 
 .mt-20 {
   margin-top: 5rem;
+}
+
+.mb-20 {
+  margin-bottom: 5rem;
 }
 
 .mr-auto {
@@ -2639,6 +2647,10 @@ select {
 
 .bottom-auto {
   bottom: auto;
+}
+
+.-left-100 {
+  left: -100%;
 }
 
 .resize-none {
@@ -3151,6 +3163,10 @@ select {
   width: 50%;
 }
 
+.w-3\/4 {
+  width: 75%;
+}
+
 .w-6\/12 {
   width: 50%;
 }
@@ -3391,6 +3407,10 @@ select {
 
   .md\:justify-between {
     justify-content: space-between;
+  }
+
+  .md\:mb-0 {
+    margin-bottom: 0px;
   }
 
   .md\:mt-4 {
