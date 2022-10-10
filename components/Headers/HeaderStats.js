@@ -21,7 +21,7 @@ export default function HeaderStats() {
                   statPercent="3.48"
                   statPercentColor="text-emerald-500"
                   statDescripiron="Since last month"
-                  statIconName="far fa-chart-bar"
+                  statIconName="fa fa-book"
                   statIconColor="bg-red-500"
                 />
               </div>
@@ -33,7 +33,7 @@ export default function HeaderStats() {
                   statPercent="3.48"
                   statPercentColor="text-red-500"
                   statDescripiron="Since last week"
-                  statIconName="fas fa-chart-pie"
+                  statIconName="fa fa-hourglass-start"
                   statIconColor="bg-orange-500"
                 />
               </div>
@@ -45,7 +45,7 @@ export default function HeaderStats() {
                   statPercent="1.10"
                   statPercentColor="text-orange-500"
                   statDescripiron="Since yesterday"
-                  statIconName="fas fa-users"
+                  statIconName="fa fa-bars-progress"
                   statIconColor="bg-pink-500"
                 />
               </div>
@@ -57,7 +57,7 @@ export default function HeaderStats() {
                   statPercent="12"
                   statPercentColor="text-emerald-500"
                   statDescripiron="Since last month"
-                  statIconName="fas fa-percent"
+                  statIconName="fa fa-badge-check"
                   statIconColor="bg-lightBlue-500"
                 />
               </div>

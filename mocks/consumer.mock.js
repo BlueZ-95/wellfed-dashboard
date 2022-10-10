@@ -5,9 +5,6 @@ export default {
     "Course Name",
     "Total Screen Time",
     "Course Status",
-    "QR Certificate",
-    "View Certificate",
-    "Schedule Offline Exam",
   ],
   courses: [
     {
