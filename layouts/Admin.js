@@ -4,7 +4,7 @@ import React from "react";
 import AdminNavbar from "components/Navbars/Navbar.js";
 import HeaderStats from "components/Headers/HeaderStats.js";
 import FooterAdmin from "components/Footers/FooterAdmin.js";
-import LinkCTA from "components/LinkCTA/LinkCTA";
+import LinkCTA from "components/Base/LinkCTA/LinkCTA";
 import ContactDetails from "components/ContactDetails/ContactDetails";
 import Navbar from "components/Navbars/Navbar.js";
 import Sidebar from "components/Sidebar/Sidebar";
@@ -24,7 +24,7 @@ export default function Admin({ children }) {
               ctaText="View Courses"
               ctaLink="https://www.well-fed.com"
               target="_blank"
-              ctaColors={{
+              ctaStyles={{
                 bgColor: "bg-wellfedPrimaryBlue",
                 hoverBgColor: "bg-wellfedPrimaryGreen",
               }}
@@ -33,7 +33,7 @@ export default function Admin({ children }) {
               ctaText="Chat With Us"
               ctaLink="https://wa.me/18475718540"
               target="_blank"
-              ctaColors={{
+              ctaStyles={{
                 bgColor: "bg-wellfedPrimaryBlue",
                 hoverBgColor: "bg-wellfedPrimaryGreen",
               }}

@@ -15,7 +15,7 @@ module.exports = {
     },
     extend: {
       colors: {
-        wellfedPrimaryBlue: "#0094a3",
+        wellfedPrimaryBlue: "#0094A3",
         wellfedPrimaryGreen: "#006837",
       },
       minHeight: {

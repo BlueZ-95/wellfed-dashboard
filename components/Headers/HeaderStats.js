@@ -57,7 +57,7 @@ export default function HeaderStats() {
                   statPercent="12"
                   statPercentColor="text-emerald-500"
                   statDescripiron="Since last month"
-                  statIconName="fa fa-badge-check"
+                  statIconName="fa fa-check"
                   statIconColor="bg-lightBlue-500"
                 />
               </div>
