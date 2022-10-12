@@ -1,3 +1,4 @@
+import AgencyLink from "components/Base/AgencyLink/AgencyLink";
 import React from "react";
 
 export default function FooterAdmin() {
@@ -10,12 +11,7 @@ export default function FooterAdmin() {
             <div className="w-full md:w-4/12 px-4">
               <div className="text-sm text-blueGray-500 font-semibold py-1 text-center md:text-left">
                 © {new Date().getFullYear()} Well Fed Seminars, Inc. |{" "}
-                <a
-                  href="https://www.thermedia.in"
-                  className="text-red-700 hover:text-blueGray-500 text-sm font-semibold py-1"
-                >
-                  R Media
-                </a>
+                <AgencyLink />
               </div>
             </div>
             <div className="w-full md:w-8/12 px-4">

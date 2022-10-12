@@ -4,7 +4,9 @@ import { useRouter } from "next/router";
 
 import UserDropdown from "components/Dropdowns/UserDropdown.js";
 import Image from "next/image";
-import LinkCTA from "components/LinkCTA/LinkCTA";
+import LinkCTA from "components/Base/LinkCTA/LinkCTA";
+import AgencyLink from "components/Base/AgencyLink/AgencyLink";
+import SocialMediaIcons from "components/Base/SocialMediaIcons/SocialMediaIcons";
 
 export default function Sidebar() {
   const [collapseShow, setCollapseShow] = React.useState("hidden");
@@ -187,41 +189,20 @@ export default function Sidebar() {
                   ctaText="Chat With Us"
                   ctaLink="https://wa.me/18475718540"
                   target="_blank"
-                  ctaColors={{
+                  ctaStyles={{
                     bgColor: "bg-wellfedPrimaryBlue",
                     hoverBgColor: "bg-wellfedPrimaryGreen",
                   }}
                 />
               </li>
 
-              <li className="items-center">
-                <Link href="/auth/register">
-                  <a
-                    href="#pablo"
-                    className="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
-                  >
-                    <button
-                      className="bg-white text-lightBlue-600 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
-                      type="button"
-                    >
-                      <i className="fab fa-facebook"></i>
-                    </button>
-                    <button
-                      className="bg-white text-red-600 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
-                      type="button"
-                    >
-                      <i className="fab fa-instagram"></i>
-                    </button>
-                    <button
-                      className="bg-white text-lightBlue-600 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
-                      type="button"
-                    >
-                      <i className="fab fa-linkedin"></i>
-                    </button>
-                  </a>
-                </Link>
+              <li className="items-center my-4">
+                <SocialMediaIcons />
               </li>
             </ul>
+            <span className="fixed bottom-0 my-4">
+              Developed by <AgencyLink />
+            </span>
           </div>
         </div>
       </nav>
