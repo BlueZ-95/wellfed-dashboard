@@ -1,5 +1,5 @@
-import AgencyLink from "components/Base/AgencyLink/AgencyLink";
 import React from "react";
+import AgencyLink from "../Base/AgencyLink/AgencyLink";
 
 export default function FooterAdmin() {
   return (
