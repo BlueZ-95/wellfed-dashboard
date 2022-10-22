@@ -2,9 +2,13 @@ import React from "react";
 
 // components
 
-import CardStats from "../Cards/CardStats";
+import CardStats, { CardStatsProps } from "../Cards/CardStats";
 
-export default function HeaderStats() {
+export interface HeaderStatsProps {
+  cardStats: Array<CardStatsProps>;
+}
+
+export default function HeaderStats({ cardStats }: HeaderStatsProps) {
   return (
     <>
       {/* Header */}
@@ -13,54 +17,22 @@ export default function HeaderStats() {
           <div>
             {/* Card stats */}
             <div className="flex flex-wrap">
-              <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
-                <CardStats
-                  statSubtitle="Courses"
-                  statTitle="350,897"
-                  statArrow="up"
-                  statPercent="3.48"
-                  statPercentColor="text-emerald-500"
-                  statDescripiron="Since last month"
-                  statIconName="fa fa-book"
-                  statIconColor="bg-red-500"
-                />
-              </div>
-              <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
-                <CardStats
-                  statSubtitle="Not Initiated"
-                  statTitle="2,356"
-                  statArrow="down"
-                  statPercent="3.48"
-                  statPercentColor="text-red-500"
-                  statDescripiron="Since last week"
-                  statIconName="fa fa-hourglass-start"
-                  statIconColor="bg-orange-500"
-                />
-              </div>
-              <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
-                <CardStats
-                  statSubtitle="In Progress"
-                  statTitle="924"
-                  statArrow="down"
-                  statPercent="1.10"
-                  statPercentColor="text-orange-500"
-                  statDescripiron="Since yesterday"
-                  statIconName="fa fa-bars-progress"
-                  statIconColor="bg-pink-500"
-                />
-              </div>
-              <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
-                <CardStats
-                  statSubtitle="Completed"
-                  statTitle="49,65%"
-                  statArrow="up"
-                  statPercent="12"
-                  statPercentColor="text-emerald-500"
-                  statDescripiron="Since last month"
-                  statIconName="fa fa-check"
-                  statIconColor="bg-lightBlue-500"
-                />
-              </div>
+              {cardStats.map((stats) => {
+                return (
+                  <div className="w-full lg:w-6/12 xl:w-3/12 px-4">
+                    <CardStats
+                      statSubtitle={stats.statSubtitle}
+                      statTitle={stats.statTitle}
+                      // statArrow="up"
+                      // statPercent="3.48"
+                      // statPercentColor="text-emerald-500"
+                      // statDescripiron="Since last month"
+                      statIconName={stats.statIconName}
+                      statIconColor={stats.statIconColor}
+                    />
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
