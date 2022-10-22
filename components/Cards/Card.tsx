@@ -33,7 +33,7 @@ const Card = ({ data }) => {
                 color: "text-wellfedPrimaryBlue",
                 hoverBgColor: "hover:bg-wellfedPrimaryBlue",
                 customClasses:
-                  "mx-auto text-center w-3/5 border border-wellfedPrimaryBlue group-hover:text-black",
+                  "mx-auto text-center w-3/5 border border-wellfedPrimaryBlue group-hover:text-white",
               }}
               isArrowEnabled={true}
             />
