@@ -14,10 +14,6 @@ export interface CardStatsProps {
 export default function CardStats({
   statSubtitle,
   statTitle,
-  statArrow,
-  statPercent,
-  statPercentColor,
-  statDescripiron,
   statIconName,
   statIconColor,
 }: CardStatsProps) {
