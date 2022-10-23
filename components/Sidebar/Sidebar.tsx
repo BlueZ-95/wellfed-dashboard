@@ -84,7 +84,8 @@ export default function Sidebar() {
                     href="#pablo"
                     className={
                       "text-xs uppercase py-3 font-bold block pl-3 " +
-                      (router.pathname.indexOf("/consumer") !== -1
+                      (router.pathname.indexOf("/consumer") !== -1 ||
+                      router.pathname.indexOf("/enterprise") !== -1
                         ? "text-white bg-wellfedPrimaryBlue rounded"
                         : "text-gray-800 hover:text-gray-700")
                     }

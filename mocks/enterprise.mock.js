@@ -1,0 +1,41 @@
+export default {
+  columns: [
+    "Course ID",
+    "Purchase Status",
+    "Course Name",
+    "Total Screen Time",
+    "Course Status",
+  ],
+  courses: [
+    {
+      courseId: "WF1001",
+      purchaseStatus: "Active",
+      courseName: "Food Manager",
+      totalScreenTime: "8 Hours",
+      courseStatus: "InProgress",
+      qrCertificate: "https://google.com",
+      viewCertificate: "https://google.com",
+      scheduleExam: "https://google.com",
+    },
+    {
+      courseId: "WF1002",
+      purchaseStatus: "Expired",
+      courseName: "Hotel Management",
+      totalScreenTime: "5 Hours",
+      courseStatus: "Not Initiated",
+      qrCertificate: "https://google.com",
+      viewCertificate: "https://google.com",
+      scheduleExam: "https://google.com",
+    },
+    {
+      courseId: "WF1003",
+      purchaseStatus: "Active",
+      courseName: "Allergy Training",
+      totalScreenTime: "3 Hours",
+      courseStatus: "Completed",
+      qrCertificate: "https://google.com",
+      viewCertificate: "https://google.com",
+      scheduleExam: "https://google.com",
+    },
+  ],
+};
