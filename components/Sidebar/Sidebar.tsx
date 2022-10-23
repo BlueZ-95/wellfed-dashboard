@@ -1,16 +1,18 @@
 import React from "react";
+import { useRouter } from "next/router";
+import Link from "next/link";
+import Image from "next/image";
 
 import UserDropdown from "../Dropdowns/UserDropdown";
 import LinkCTA from "../Base/LinkCTA/LinkCTA";
 import AgencyLink from "../Base/AgencyLink/AgencyLink";
 import SocialMediaIcons from "../Base/SocialMediaIcons/SocialMediaIcons";
-import { useRouter } from "next/router";
-import Link from "next/link";
-import Image from "next/image";
+import { SidebarProps } from "./Sidebar.types";
 
-export default function Sidebar() {
+export default function Sidebar({ navLinks }: SidebarProps) {
   const [collapseShow, setCollapseShow] = React.useState("hidden");
   const router = useRouter();
+
   return (
     <div className="mb-20 md:mb-0">
       <nav className="fixed top-0 w-full md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-xl bg-white flex flex-wrap items-center justify-between md:w-64 z-10 py-4 px-6">
@@ -78,102 +80,50 @@ export default function Sidebar() {
             {/* Navigation */}
 
             <ul className="md:flex-col md:min-w-full flex flex-col list-none">
-              <li className="items-center">
-                <Link href="/admin/dashboard">
-                  <a
-                    href="#pablo"
-                    className={
-                      "text-xs uppercase py-3 font-bold block pl-3 " +
-                      (router.pathname.indexOf("/consumer") !== -1 ||
-                      router.pathname.indexOf("/enterprise") !== -1
-                        ? "text-white bg-wellfedPrimaryBlue rounded"
-                        : "text-gray-800 hover:text-gray-700")
-                    }
-                  >
-                    <i
-                      className={
-                        "fas fa-tv mr-2 text-sm " +
-                        (router.pathname.indexOf("/admin/dashboard") !== -1
-                          ? "opacity-75"
-                          : "text-blueGray-300")
-                      }
-                    ></i>{" "}
-                    Dashboard
-                  </a>
-                </Link>
-              </li>
-
-              <li className="items-center">
-                <Link href="/admin/settings">
-                  <a
-                    href="#pablo"
-                    className={
-                      "text-xs uppercase py-3 font-bold block pl-3 " +
-                      (router.pathname.indexOf("/admin/settings") !== -1
-                        ? "text-white bg-wellfedPrimaryBlue rounded"
-                        : "text-gray-800 hover:text-gray-700")
-                    }
-                  >
-                    <i
-                      className={
-                        "fas fa-qrcode mr-2 text-sm " +
-                        (router.pathname.indexOf("/admin/settings") !== -1
-                          ? "opacity-75"
-                          : "text-blueGray-300")
-                      }
-                    ></i>{" "}
-                    QR (Offline Exam)
-                  </a>
-                </Link>
-              </li>
-
-              <li className="items-center">
-                <Link href="/admin/tables">
-                  <a
-                    href="#pablo"
-                    className={
-                      "text-xs uppercase py-3 font-bold block pl-3 " +
-                      (router.pathname.indexOf("/admin/tables") !== -1
-                        ? "text-white bg-wellfedPrimaryBlue rounded pl-3"
-                        : "text-gray-800 hover:text-gray-700")
-                    }
-                  >
-                    <i
-                      className={
-                        "fas fa-table mr-2 text-sm " +
-                        (router.pathname.indexOf("/admin/tables") !== -1
-                          ? "opacity-75"
-                          : "text-blueGray-300")
-                      }
-                    ></i>{" "}
-                    Schedule Exam
-                  </a>
-                </Link>
-              </li>
-
-              <li className="items-center">
-                <Link href="/admin/maps">
-                  <a
-                    href="#pablo"
-                    className={
-                      "text-xs uppercase py-3 font-bold block pl-3 " +
-                      (router.pathname.indexOf("/admin/maps") !== -1
-                        ? "text-white bg-wellfedPrimaryBlue rounded"
-                        : "text-gray-800 hover:text-gray-700")
-                    }
-                  >
-                    <i
-                      className={
-                        "fas fa-certificate mr-2 text-sm " +
-                        (router.pathname.indexOf("/admin/maps") !== -1
-                          ? "opacity-75"
-                          : "text-blueGray-300")
-                      }
-                    ></i>{" "}
-                    Final Certificates
-                  </a>
-                </Link>
-              </li>
+              {navLinks.map((link) => {
+                return (
+                  <li className="items-center">
+                    <>
+                      <Link href={link.href}>
+                        <a
+                          href="javascript;"
+                          className={`text-xs uppercase py-3 font-bold block pl-3
+                          ${
+                            router.pathname.indexOf(link.href) !== -1 ||
+                            router.pathname.indexOf(link.href) !== -1
+                              ? "text-white bg-wellfedPrimaryBlue rounded"
+                              : "text-gray-800 hover:text-gray-700"
+                          }`}
+                        >
+                          <i
+                            className={`mr-2 text-sm ${link.icon}
+                            ${
+                              router.pathname.indexOf(link.href) !== -1
+                                ? "opacity-75"
+                                : "text-blueGray-300"
+                            }`}
+                          ></i>{" "}
+                          {link.title}
+                        </a>
+                      </Link>
+                      {link.subLinks && link.subLinks.length > 0 && (
+                        <div className="inline-block bg-slate-100 ml-4 rounded py-2">
+                          {link.subLinks.map((subLink) => {
+                            return (
+                              <a
+                                href="javascript;"
+                                className="inline-block py-2 pl-5 text-xs uppercase font-bold text-gray-500 hover:text-gray-700"
+                              >
+                                {subLink.title}
+                              </a>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </>
+                  </li>
+                );
+              })}
             </ul>
 
             {/* Divider */}

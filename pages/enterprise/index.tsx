@@ -8,12 +8,39 @@ import HeaderStats, {
 } from "../../components/Headers/HeaderStats";
 import Navbar from "../../components/Navbars/Navbar";
 import Sidebar from "../../components/Sidebar/Sidebar";
+import { SidebarProps } from "../../components/Sidebar/Sidebar.types";
 import Table from "../../components/Table/Table";
 
 export const CurrentContext = React.createContext([]);
 import consumerData from "../../mocks/consumer.mock";
 
 const Consumer = () => {
+  //#region data
+  const sidebarProps: SidebarProps = {
+    navLinks: [
+      {
+        href: "/enterprise",
+        title: "DASHBOARD",
+        icon: "fas fa-tv",
+      },
+      {
+        href: "/enrolled-users",
+        title: "Users",
+        icon: "fas fa-qrcode",
+        subLinks: [
+          {
+            href: "#",
+            title: "Assign New User",
+          },
+          {
+            href: "#",
+            title: "Upload Certificate",
+          },
+        ],
+      },
+    ],
+  };
+
   const headerStats: HeaderStatsProps = {
     cardStats: [
       {
@@ -42,9 +69,10 @@ const Consumer = () => {
       },
     ],
   };
+  //#endregion
   return (
     <>
-      <Sidebar />
+      <Sidebar navLinks={sidebarProps.navLinks} />
       <div className="relative md:ml-64 bg-blueGray-100">
         <Navbar />
         {/* <CurrentContext.Provider value={}> */}
