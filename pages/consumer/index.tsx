@@ -8,12 +8,38 @@ import HeaderStats, {
 } from "../../components/Headers/HeaderStats";
 import Navbar from "../../components/Navbars/Navbar";
 import Sidebar from "../../components/Sidebar/Sidebar";
+import { SidebarProps } from "../../components/Sidebar/Sidebar.types";
 import Table from "../../components/Table/Table";
 
 export const CurrentContext = React.createContext([]);
 import consumerData from "../../mocks/consumer.mock";
 
 const Consumer = ({ courses }) => {
+  //#region data
+  const sidebarProps: SidebarProps = {
+    navLinks: [
+      {
+        href: "/consumer",
+        title: "DASHBOARD",
+        icon: "fas fa-tv",
+      },
+      {
+        href: "#",
+        title: "QR (OFFLINE EXAM)",
+        icon: "fas fa-qrcode",
+      },
+      {
+        href: "/schedule",
+        title: "SCHEDULE EXAM",
+        icon: "fas fa-table",
+      },
+      {
+        href: "#",
+        title: "FINAL CERTIFICATES",
+        icon: "fas fa-certificate",
+      },
+    ],
+  };
   const headerStats: HeaderStatsProps = {
     cardStats: [
       {
@@ -42,9 +68,10 @@ const Consumer = ({ courses }) => {
       },
     ],
   };
+  //#endregion
   return (
     <>
-      <Sidebar />
+      <Sidebar navLinks={sidebarProps.navLinks} />
       <div className="relative md:ml-64 bg-blueGray-100">
         <Navbar />
         <CurrentContext.Provider value={courses}>
@@ -126,7 +153,6 @@ export const getStaticProps = async () => {
       });
     });
   }
-  console.log(courses);
 
   return {
     props: {
