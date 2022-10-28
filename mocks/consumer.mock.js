@@ -1,11 +1,11 @@
 export default {
-  columns: [
-    "Course ID",
-    "Purchase Status",
-    "Course Name",
-    "Total Screen Time",
-    "Course Status",
-  ],
+  columns: {
+    courseId : "Course ID",
+    purchaseStatus :"Purchase Status",
+    courseName :"Course Name",
+    totalScreenTime : "Total Screen Time",
+    courseStatus : "Course Status",
+  },
   courses: [
     {
       courseId: "WF1001",
