@@ -1,8 +1,17 @@
+export type variants = "primary" | "secondary";
+
+const variantClasses: Record<variants, string> = {
+  primary: "bg-wellfedPrimaryBlue text-white hover:bg-wellfedPrimaryGreen",
+  secondary:
+    "bg-transparent border border-wellfedPrimaryBlue text-wellfedPrimaryBlue hover:bg-wellfedPrimaryBlue hover:text-white",
+};
+
 interface LinkCTAProps {
   ctaText: string;
   ctaLink: string;
   target?: string;
-  ctaStyles: any;
+  customClasses?: string;
+  variant: variants;
   isArrowEnabled?: boolean;
 }
 
@@ -10,18 +19,15 @@ const LinkCTA = ({
   ctaText,
   ctaLink,
   target,
-  ctaStyles,
+  customClasses,
+  variant,
   isArrowEnabled,
 }: LinkCTAProps): JSX.Element => {
   return (
     <a
       href={ctaLink}
       target={target}
-      className={`${ctaStyles?.bgColor} ${ctaStyles?.hoverBgColor} ${
-        ctaStyles?.color ?? "text-white"
-      } text-xs font-bold uppercase px-4 py-4 md:px-6 md:py-3 rounded outline-none focus:outline-none mb-1 ease-linear transition-all duration-150 ${
-        ctaStyles?.customClasses
-      }`}
+      className={`${variantClasses[variant]} text-xs font-bold uppercase px-4 py-4 md:px-6 md:py-3 rounded outline-none focus:outline-none mb-1 ease-linear transition-all duration-150 ${customClasses}`}
       type="button"
     >
       {ctaText}

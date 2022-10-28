@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { UserContext } from "../../contexts/userContext";
 
 const UserDropdown = () => {
-  // dropdown props
+  const { signOut } = useContext(UserContext);
+
   const [dropdownPopoverShow, setDropdownPopoverShow] = useState(false);
 
   const openDropdownPopover = () => {
@@ -10,6 +12,12 @@ const UserDropdown = () => {
 
   const closeDropdownPopover = () => {
     setDropdownPopoverShow(false);
+  };
+
+  const logOut = (e) => {
+    e.preventDefault();
+    closeDropdownPopover();
+    signOut();
   };
 
   return (
@@ -52,7 +60,7 @@ const UserDropdown = () => {
           className={
             "text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700"
           }
-          onClick={(e) => e.preventDefault()}
+          onClick={(e) => logOut(e)}
         >
           Logout
         </a>
