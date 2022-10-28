@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import UserDropdown from "../Dropdowns/UserDropdown";
 import Image from "next/image";
+import { UserProps } from "../../scripts/UIConfigs.types";
+import { UserContext } from "../../contexts/userContext";
 
 export default function Navbar() {
+  const user: UserProps = useContext(UserContext);
+
   return (
     <>
       {/* Navbar */}
@@ -15,7 +19,9 @@ export default function Navbar() {
             href="#pablo"
             onClick={(e) => e.preventDefault()}
           >
-            Consumer Dashboard
+            {`${
+              user?.userType === "consumer" ? "Consumer" : "Enterprise"
+            } Dashboard`}
           </a>
 
           {/* User */}

@@ -7,7 +7,7 @@ import UserDropdown from "../Dropdowns/UserDropdown";
 import LinkCTA from "../Base/LinkCTA/LinkCTA";
 import AgencyLink from "../Base/AgencyLink/AgencyLink";
 import SocialMediaIcons from "../Base/SocialMediaIcons/SocialMediaIcons";
-import { SidebarProps } from "./Sidebar.types";
+import { SidebarProps } from "../../scripts/UIConfigs.types";
 
 export default function Sidebar({ navLinks }: SidebarProps) {
   const [collapseShow, setCollapseShow] = React.useState("hidden");
@@ -140,10 +140,7 @@ export default function Sidebar({ navLinks }: SidebarProps) {
                   ctaText="Chat With Us"
                   ctaLink="https://wa.me/18475718540"
                   target="_blank"
-                  ctaStyles={{
-                    bgColor: "bg-wellfedPrimaryBlue",
-                    hoverBgColor: "hover:bg-wellfedPrimaryGreen",
-                  }}
+                  variant="secondary"
                 />
               </li>
 
