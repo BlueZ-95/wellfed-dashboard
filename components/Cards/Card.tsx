@@ -28,13 +28,8 @@ const Card = ({ data }) => {
             <LinkCTA
               ctaText="View Course"
               ctaLink="https://google.com"
-              ctaStyles={{
-                bgColor: "bg-transparent",
-                color: "text-wellfedPrimaryBlue",
-                hoverBgColor: "hover:bg-wellfedPrimaryBlue",
-                customClasses:
-                  "mx-auto text-center w-3/5 border border-wellfedPrimaryBlue group-hover:text-white",
-              }}
+              variant="primary"
+              customClasses="mx-auto text-center w-3/5 border border-wellfedPrimaryBlue group-hover:text-white"
               isArrowEnabled={true}
             />
           </div>
