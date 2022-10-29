@@ -1,12 +1,18 @@
 type userType = "consumer" | "enterprise";
 
 export interface UserProps {
+  userName: string;
   email: string;
   userType: userType;
 }
 
+export interface AuthenticatedUserProps {
+  token: string;
+  details: UserProps;
+}
+
 export interface SessionProps {
-  userDetails: UserProps;
+  userDetails: AuthenticatedUserProps;
   signIn: Function;
   signOut: Function;
 }

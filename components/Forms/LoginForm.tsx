@@ -1,7 +1,8 @@
 import Image from "next/image";
-import { useContext, useRef } from "react";
+import { useContext, useRef, useState } from "react";
 import { UserContext } from "../../contexts/userContext";
 import { APIENDPOINTS } from "../../scripts/APIEndpoints.constants";
+import { AuthenticatedUserProps } from "../../scripts/UIConfigs.types";
 
 export default function LoginForm() {
   const { signIn } = useContext(UserContext);
@@ -11,34 +12,47 @@ export default function LoginForm() {
   const consumerRadioRef = useRef(null);
   const enterpriseRadioRef = useRef(null);
 
+  const [errorMessage, setErrorMessage] = useState("");
+
   const initiateLogin = () => {
     console.log(emailFieldRef.current.value);
     console.log(passwordFieldRef.current.value);
     console.log(consumerRadioRef.current.checked);
     console.log(enterpriseRadioRef.current.checked);
+    const _isEnterprise = enterpriseRadioRef.current.checked;
 
-    fetch(
-      APIENDPOINTS.GETUSERBYEMAIL.replace(
-        "{email}",
-        emailFieldRef.current.value
-      )
-    )
+    fetch(APIENDPOINTS.AUTHENTICATEUSER, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        identifier: emailFieldRef.current.value,
+        password: passwordFieldRef.current.value,
+      }),
+    })
       .then((res) => res.json())
       .then((data) => {
-        if (data.length > 0) {
-          console.log("api", data);
-
-          const user = {
-            email: emailFieldRef.current.value,
-            userType: consumerRadioRef.current.checked
-              ? "consumer"
-              : "enterprise",
-          };
-
-          signIn(user);
-        } else {
-          console.error("User not found");
+        if (data.error) {
+          if (data.error.name === "ValidationError") {
+            setErrorMessage("Email/Username or Password is wrong");
+            return false;
+          }
         }
+
+        if (data.user.isEnterprise !== _isEnterprise) {
+          setErrorMessage("Invalid user type");
+          return false;
+        }
+
+        const authenticatedUserdata: AuthenticatedUserProps = {
+          token: data.jwt,
+          details: {
+            userName: data.user.username,
+            email: data.user.email,
+            userType: data.user.isEnterprise ? "enterprise" : "consumer",
+          },
+        };
+
+        signIn(authenticatedUserdata);
       })
       .catch((err) => console.error("User not found"));
   };
@@ -46,7 +60,7 @@ export default function LoginForm() {
   return (
     <>
       <main>
-        <section className="relative w-full h-full py-40 min-h-screen">
+        <section className="relative w-full h-full py-40">
           <div className="absolute top-0 w-full h-full bg-no-repeat bg-full"></div>
           <div className="container mx-auto px-4 h-full">
             <div className="flex content-center items-center justify-center h-full">
@@ -58,7 +72,7 @@ export default function LoginForm() {
                   layout="responsive"
                   objectFit="contain"
                 />
-                <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-200 border-0">
+                <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-200 border-0 mt-10">
                   <div className="flex-auto px-4 lg:px-10 py-10">
                     <form>
                       <div className="relative w-full mb-3">
@@ -69,11 +83,11 @@ export default function LoginForm() {
                           Email
                         </label>
                         <input
-                          type="email"
+                          type="text"
                           name="email"
                           ref={emailFieldRef}
                           className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          placeholder="Email"
+                          placeholder="Email or Username"
                         />
                       </div>
 
@@ -126,19 +140,6 @@ export default function LoginForm() {
                         </div>
                       </div>
 
-                      {/* <div>
-                        <label className="inline-flex items-center cursor-pointer mt-3">
-                          <input
-                            id="customCheckLogin"
-                            type="checkbox"
-                            className="form-checkbox border-0 rounded text-blueGray-700 ml-1 w-5 h-5 ease-linear transition-all duration-150"
-                          />
-                          <span className="ml-2 text-sm font-semibold text-blueGray-600">
-                            Remember me
-                          </span>
-                        </label>
-                      </div> */}
-
                       <div className="text-center mt-6">
                         <button
                           onClick={initiateLogin}
@@ -148,6 +149,12 @@ export default function LoginForm() {
                           Sign In
                         </button>
                       </div>
+
+                      {errorMessage && (
+                        <div className="error-label">
+                          <label className="text-red-700">{errorMessage}</label>
+                        </div>
+                      )}
                     </form>
                   </div>
                 </div>
