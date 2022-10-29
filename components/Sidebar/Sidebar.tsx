@@ -107,7 +107,13 @@ export default function Sidebar({ navLinks }: SidebarProps) {
                         </a>
                       </Link>
                       {link.subLinks && link.subLinks.length > 0 && (
-                        <div className="inline-block bg-slate-100 ml-4 rounded py-2">
+                        <div
+                          className={`${
+                            router.pathname.indexOf(link.href) !== -1
+                              ? "inline-block"
+                              : "hidden"
+                          } bg-slate-100 ml-4 mt-2 rounded py-2`}
+                        >
                           {link.subLinks.map((subLink) => {
                             return (
                               <a

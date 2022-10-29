@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { useContext, useRef } from "react";
 import { UserContext } from "../../contexts/userContext";
+import { APIENDPOINTS } from "../../scripts/APIEndpoints.constants";
 
 export default function LoginForm() {
   const { signIn } = useContext(UserContext);
@@ -16,12 +17,30 @@ export default function LoginForm() {
     console.log(consumerRadioRef.current.checked);
     console.log(enterpriseRadioRef.current.checked);
 
-    const user = {
-      email: emailFieldRef.current.value,
-      userType: consumerRadioRef.current.checked ? "consumer" : "enterprise",
-    };
+    fetch(
+      APIENDPOINTS.GETUSERBYEMAIL.replace(
+        "{email}",
+        emailFieldRef.current.value
+      )
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.length > 0) {
+          console.log("api", data);
 
-    signIn(user);
+          const user = {
+            email: emailFieldRef.current.value,
+            userType: consumerRadioRef.current.checked
+              ? "consumer"
+              : "enterprise",
+          };
+
+          signIn(user);
+        } else {
+          console.error("User not found");
+        }
+      })
+      .catch((err) => console.error("User not found"));
   };
 
   return (
