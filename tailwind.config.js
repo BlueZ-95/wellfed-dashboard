@@ -1,15 +1,20 @@
 /** @type {import('tailwindcss').Config} */
+
+const colors = require("tailwindcss/colors");
+
 module.exports = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
+    "./layouts/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    colors: {
+      ...colors,
+      wellfedPrimaryBlue: "#0094A3",
+      wellfedPrimaryGreen: "#006837",
+    },
     extend: {
-      colors: {
-        wellfedPrimaryBlue: "#0094A3",
-        wellfedPrimaryGreen: "#006837",
-      },
       minHeight: {
         "screen-75": "75vh",
       },
