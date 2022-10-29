@@ -21,7 +21,7 @@ export default function LoginForm() {
     console.log(enterpriseRadioRef.current.checked);
     const _isEnterprise = enterpriseRadioRef.current.checked;
 
-    fetch(APIENDPOINTS.AUTHENTICATEUSER, {
+    fetch(APIENDPOINTS.AUTHENTICATE_USER, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
