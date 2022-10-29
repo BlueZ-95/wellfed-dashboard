@@ -8,7 +8,7 @@ export interface UserProps {
 
 export interface AuthenticatedUserProps {
   token: string;
-  details: UserProps;
+  user: UserProps;
 }
 
 export interface SessionProps {

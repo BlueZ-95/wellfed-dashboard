@@ -32,7 +32,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const signIn = (userDetails: AuthenticatedUserProps) => {
     setUserDetails(userDetails);
     setCookie("userDetails", userDetails);
-    router.push(`/${userDetails.details.userType}`);
+    router.push(`/${userDetails.user.userType}`);
   };
 
   const signOut = () => {
