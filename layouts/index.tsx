@@ -10,7 +10,7 @@ const Layout = ({ children }) => {
   const { userDetails } = useContext<SessionProps>(UserContext);
 
   const [sidebarProps] = useState<SidebarProps>(
-    userDetails?.details?.userType === "consumer"
+    userDetails?.user?.userType === "consumer"
       ? consumerNavLinks
       : enterpriseNavLinks
   );

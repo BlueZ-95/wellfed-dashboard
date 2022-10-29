@@ -45,7 +45,7 @@ export default function LoginForm() {
 
         const authenticatedUserdata: AuthenticatedUserProps = {
           token: data.jwt,
-          details: {
+          user: {
             userName: data.user.username,
             email: data.user.email,
             userType: data.user.isEnterprise ? "enterprise" : "consumer",
