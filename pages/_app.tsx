@@ -6,9 +6,9 @@ import type { ReactElement, ReactNode } from "react";
 import type { NextPage } from "next";
 import Layout from "../layouts";
 import { UserContext } from "../contexts/userContext";
-import { UserProps } from "../scripts/UIConfigs.types";
+import { AuthenticatedUserProps } from "../scripts/UIConfigs.types";
 import { useRouter } from "next/router";
-import { getUserDetails } from "../lib/session";
+import { getUserDetails } from "../scripts/session";
 import { deleteCookie, setCookie } from "cookies-next";
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
@@ -20,7 +20,7 @@ type AppPropsWithLayout = AppProps & {
 };
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
-  const [userDetails, setUserDetails] = useState<UserProps>(null);
+  const [userDetails, setUserDetails] = useState<AuthenticatedUserProps>(null);
 
   const router = useRouter();
 
@@ -29,10 +29,10 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     setUserDetails(_userDetails);
   }, []);
 
-  const signIn = (userDetails: UserProps) => {
+  const signIn = (userDetails: AuthenticatedUserProps) => {
     setUserDetails(userDetails);
     setCookie("userDetails", userDetails);
-    router.push(`/${userDetails.userType}`);
+    router.push(`/${userDetails.details.userType}`);
   };
 
   const signOut = () => {
