@@ -6,7 +6,10 @@ import type { ReactElement, ReactNode } from "react";
 import type { NextPage } from "next";
 import Layout from "../layouts";
 import { UserContext } from "../contexts/userContext";
-import { AuthenticatedUserProps } from "../scripts/UIConfigs.types";
+import {
+  AuthenticatedUserProps,
+  SessionProps,
+} from "../scripts/UIConfigs.types";
 import { useRouter } from "next/router";
 import { getUserDetails } from "../scripts/session";
 import { deleteCookie, setCookie } from "cookies-next";
@@ -26,6 +29,9 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 
   useEffect(() => {
     const _userDetails = getUserDetails();
+
+    console.log("_UserDetails", _userDetails);
+
     setUserDetails(_userDetails);
   }, []);
 
@@ -45,14 +51,16 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     Component.getLayout ??
     ((page) => (
       <UserContext.Provider
-        value={{ userDetails: userDetails, signOut: signOut }}
+        value={{ userDetails: userDetails, signOut: signOut, signIn: signIn }}
       >
         <Layout>{page}</Layout>
       </UserContext.Provider>
     ));
 
   return getLayout(
-    <UserContext.Provider value={{ signIn: signIn }}>
+    <UserContext.Provider
+      value={{ userDetails: userDetails, signOut: signOut, signIn: signIn }}
+    >
       <Component {...pageProps} />
     </UserContext.Provider>
   );
