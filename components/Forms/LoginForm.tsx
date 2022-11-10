@@ -16,10 +16,6 @@ export default function LoginForm() {
   const [isApiCalled, setIsApiCalled] = useState(false);
 
   const initiateLogin = () => {
-    console.log(emailFieldRef.current.value);
-    console.log(passwordFieldRef.current.value);
-    console.log(consumerRadioRef.current.checked);
-    console.log(enterpriseRadioRef.current.checked);
     const _isEnterprise = enterpriseRadioRef.current.checked;
 
     setIsApiCalled(true);
@@ -176,6 +172,11 @@ export default function LoginForm() {
                             "Sign In"
                           )}
                         </button>
+                      </div>
+                      <div className="forgot-password-label">
+                        <label className="text-blueGray-500 cursor-pointer">
+                          Forgot password?
+                        </label>
                       </div>
 
                       {errorMessage && (

@@ -3,11 +3,11 @@ import Card from "../../components/Cards/Card";
 import HeaderStats, {
   HeaderStatsProps,
 } from "../../components/Headers/HeaderStats";
+import { withAuth } from "../../components/HOC/withAuth";
 import Table from "../../components/Table/Table";
 import { UserContext } from "../../contexts/userContext";
 
 import consumerData from "../../mocks/consumer.mock";
-import { APIWrapper } from "../../scripts/APIs/ConsumerApi";
 import { CoursesListProps, SessionProps } from "../../scripts/UIConfigs.types";
 
 const Consumer = () => {
@@ -47,8 +47,8 @@ const Consumer = () => {
   useEffect(() => {
     console.log("userDetails", userDetails);
 
-    const _courses = APIWrapper.consumerAPIs.fetchCourses();
-    console.log("courses", _courses);
+    // const _courses = APIWrapper.consumerAPIs.fetchCourses();
+    // console.log("courses", _courses);
 
     // setCourses(_courses);
   }, []);
@@ -87,36 +87,4 @@ const Consumer = () => {
   );
 };
 
-export default Consumer;
-
-// export const getServerSideProps = async () => {
-//   const res = await fetch(
-//     "https://wellfed-content-api-rmedia.herokuapp.com/api/courses",
-//     {
-//       headers: {
-//         Authorization: `Bearer ${userDetails}`,
-//       },
-//     }
-//   );
-//   const data = await res.json();
-
-//   const rawData = data?.data;
-
-//   const courses = [];
-
-//   if (Array.isArray(rawData) && rawData.length > 0) {
-//     rawData.forEach((item) => {
-//       courses.push({
-//         CourseID: item.id,
-//         Title: item.attributes.Title,
-//         Label: item.attributes.Label,
-//       });
-//     });
-//   }
-
-//   return {
-//     props: {
-//       courses,
-//     },
-//   };
-// };
+export default withAuth(Consumer);

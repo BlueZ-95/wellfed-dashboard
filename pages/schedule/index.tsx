@@ -1,20 +1,6 @@
-import Image from "next/image";
-import { useRef, useState } from "react";
-import Sidebar from "../../components/Sidebar/Sidebar";
+import { withAuth } from "../../components/HOC/withAuth";
 
-export default function Login() {
-  // const emailFieldRef = useRef(null);
-  // const passwordFieldRef = useRef(null);
-  // const consumerRadioRef = useRef(null);
-  // const enterpriseRadioRef = useRef(null);
-
-  // function initiateLogin(){
-  //   console.log(emailFieldRef.current.value);
-  //   console.log(passwordFieldRef.current.value);
-  //   console.log(consumerRadioRef.current.checked);
-  //   console.log(enterpriseRadioRef.current.checked);
-  // }
-
+const Schedule = () => {
   return (
     <>
       <main>
@@ -102,18 +88,6 @@ export default function Login() {
                     </form>
                   </div>
                 </div>
-
-                {/* <div className="flex flex-wrap mt-6 relative">
-                  <div className="w-1/2">
-                    <a
-                      href="#pablo"
-                      onClick={(e) => e.preventDefault()}
-                      className="text-blueGray-200"
-                    >
-                      <small>Forgot password?</small>
-                    </a>
-                  </div>
-                </div> */}
               </div>
             </div>
           </div>
@@ -121,4 +95,5 @@ export default function Login() {
       </main>
     </>
   );
-}
+};
+export default withAuth(Schedule);
