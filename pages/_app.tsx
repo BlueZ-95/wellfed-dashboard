@@ -13,6 +13,8 @@ import {
 import { useRouter } from "next/router";
 import { getUserDetails } from "../scripts/session";
 import { deleteCookie, setCookie } from "cookies-next";
+import { ConsumerEndpoints } from "../scripts/APIs/APIEndpoints.constants";
+import CreateHTTPInterceptor from "../scripts/http_interceptor_script";
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -26,6 +28,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const [userDetails, setUserDetails] = useState<AuthenticatedUserProps>(null);
 
   const router = useRouter();
+  
 
   useEffect(() => {
     const _userDetails = getUserDetails();
@@ -33,6 +36,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     console.log("_UserDetails", _userDetails);
 
     setUserDetails(_userDetails);
+
   }, []);
 
   const signIn = (userDetails: AuthenticatedUserProps) => {

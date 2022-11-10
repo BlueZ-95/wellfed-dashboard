@@ -1,7 +1,8 @@
 import Image from "next/image";
 import { useContext, useRef, useState } from "react";
 import { UserContext } from "../../contexts/userContext";
-import { APIENDPOINTS } from "../../scripts/APIs/APIEndpoints.constants";
+// import { APIENDPOINTS } from "../../scripts/APIs/APIEndpoints.constants";
+import { UserAuthentication } from "../../scripts/APIs/UserAuthenticationService";
 import { AuthenticatedUserProps } from "../../scripts/UIConfigs.types";
 
 export default function LoginForm() {
@@ -19,16 +20,19 @@ export default function LoginForm() {
     const _isEnterprise = enterpriseRadioRef.current.checked;
 
     setIsApiCalled(true);
-    fetch(APIENDPOINTS.AUTHENTICATE_USER, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        identifier: emailFieldRef.current.value,
-        password: passwordFieldRef.current.value,
-      }),
-    })
-      .then((res) => res.json())
+    // fetch(APIENDPOINTS.AUTHENTICATE_USER, {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify({
+    //     identifier: emailFieldRef.current.value,
+    //     password: passwordFieldRef.current.value,
+    //   }),
+    // })
+    UserAuthentication.instance
+      .login(emailFieldRef.current.value, passwordFieldRef.current.value)
       .then((data) => {
+        console.log("data returned");
+        
         if (data.error) {
           if (data.error.name === "ValidationError") {
             setIsApiCalled(false);

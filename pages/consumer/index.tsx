@@ -8,6 +8,7 @@ import Table from "../../components/Table/Table";
 import { UserContext } from "../../contexts/userContext";
 
 import consumerData from "../../mocks/consumer.mock";
+
 import { CoursesListProps, SessionProps } from "../../scripts/UIConfigs.types";
 
 const Consumer = () => {
@@ -44,14 +45,7 @@ const Consumer = () => {
     ],
   };
 
-  useEffect(() => {
-    console.log("userDetails", userDetails);
-
-    // const _courses = APIWrapper.consumerAPIs.fetchCourses();
-    // console.log("courses", _courses);
-
-    // setCourses(_courses);
-  }, []);
+  useEffect(() => {}, []);
 
   //#endregion
   return (

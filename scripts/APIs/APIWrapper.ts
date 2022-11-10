@@ -1,13 +1,13 @@
-import { BASE_URL } from "./APIEndpoints.constants";
+ //import { BASE_URL } from "./APIEndpoints.constants";
 
-type method = "GET" | "POST";
+// type method = "GET" | "POST";
 
 export class APIWrapper {
   baseURL: string;
-  method: method;
+  method: string;
 
   constructor() {
-    this.baseURL = BASE_URL;
+    this.baseURL = "BASE_URL";
     this.method = "GET";
   }
 }
