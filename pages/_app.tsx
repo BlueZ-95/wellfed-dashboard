@@ -6,10 +6,15 @@ import type { ReactElement, ReactNode } from "react";
 import type { NextPage } from "next";
 import Layout from "../layouts";
 import { UserContext } from "../contexts/userContext";
-import { UserProps } from "../scripts/UIConfigs.types";
+import {
+  AuthenticatedUserProps,
+  SessionProps,
+} from "../scripts/UIConfigs.types";
 import { useRouter } from "next/router";
-import { getUserDetails } from "../lib/session";
+import { getUserDetails } from "../scripts/session";
 import { deleteCookie, setCookie } from "cookies-next";
+import { ConsumerEndpoints } from "../scripts/APIs/APIEndpoints.constants";
+import CreateHTTPInterceptor from "../scripts/http_interceptor_script";
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -20,19 +25,24 @@ type AppPropsWithLayout = AppProps & {
 };
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
-  const [userDetails, setUserDetails] = useState<UserProps>(null);
+  const [userDetails, setUserDetails] = useState<AuthenticatedUserProps>(null);
 
   const router = useRouter();
+  
 
   useEffect(() => {
     const _userDetails = getUserDetails();
+
+    console.log("_UserDetails", _userDetails);
+
     setUserDetails(_userDetails);
+
   }, []);
 
-  const signIn = (userDetails: UserProps) => {
+  const signIn = (userDetails: AuthenticatedUserProps) => {
     setUserDetails(userDetails);
     setCookie("userDetails", userDetails);
-    router.push(`/${userDetails.userType}`);
+    router.push(`/${userDetails.user.userType}`);
   };
 
   const signOut = () => {
@@ -45,14 +55,16 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     Component.getLayout ??
     ((page) => (
       <UserContext.Provider
-        value={{ userDetails: userDetails, signOut: signOut }}
+        value={{ userDetails: userDetails, signOut: signOut, signIn: signIn }}
       >
         <Layout>{page}</Layout>
       </UserContext.Provider>
     ));
 
   return getLayout(
-    <UserContext.Provider value={{ signIn: signIn }}>
+    <UserContext.Provider
+      value={{ userDetails: userDetails, signOut: signOut, signIn: signIn }}
+    >
       <Component {...pageProps} />
     </UserContext.Provider>
   );

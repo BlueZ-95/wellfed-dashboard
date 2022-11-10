@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Footer from "../components/Footers/Footer";
 import Navbar from "../components/Navbars/Navbar";
 import Sidebar from "../components/Sidebar/Sidebar";
@@ -9,9 +9,17 @@ import { SessionProps, SidebarProps } from "../scripts/UIConfigs.types";
 const Layout = ({ children }) => {
   const { userDetails } = useContext<SessionProps>(UserContext);
 
-  const [sidebarProps] = useState<SidebarProps>(
-    userDetails?.userType === "consumer" ? consumerNavLinks : enterpriseNavLinks
-  );
+  const [sidebarProps, setSidebarProps] = useState<SidebarProps>({
+    navLinks: [],
+  });
+
+  useEffect(() => {
+    setSidebarProps(
+      userDetails?.user?.userType === "consumer"
+        ? consumerNavLinks
+        : enterpriseNavLinks
+    );
+  }, [userDetails]);
 
   return (
     <>

@@ -1,7 +1,7 @@
 import { getCookie } from "cookies-next";
-import { UserProps } from "../scripts/UIConfigs.types";
+import { AuthenticatedUserProps } from "./UIConfigs.types";
 
-export const getUserDetails = (): UserProps => {
+export const getUserDetails = (): AuthenticatedUserProps => {
   let cookie = getCookie("userDetails");
   if (cookie) {
     return JSON.parse(cookie.toString());
