@@ -1,8 +1,8 @@
 //
 
 export class BaseEndpoints {
-   get BaseUrl(): string {
-    return process.env.NEXT_PUBLIC_BACKEND_URL || "http://192.168.0.104:1337";
+  get BaseUrl(): string {
+    return process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:1337";
   }
 }
 
@@ -31,7 +31,7 @@ export class ConsumerEndpoints extends BaseEndpoints {
 }
 
 export class EnterpriseEndpoints extends BaseEndpoints {
-  static  instance = new EnterpriseEndpoints();
+  static instance = new EnterpriseEndpoints();
 
   get dashboardData(): string {
     return `${this.BaseUrl}/api/dashboard`;
@@ -40,10 +40,9 @@ export class EnterpriseEndpoints extends BaseEndpoints {
     return `${this.BaseUrl}/api/enrolled-users?filters`;
   }
 
-  get assignNewUser() : string {
+  get assignNewUser(): string {
     return `${this.BaseUrl}/api/enrolled-users?filters`;
   }
-
 }
 
 //export const BASE_URL =

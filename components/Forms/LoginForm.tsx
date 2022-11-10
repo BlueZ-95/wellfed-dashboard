@@ -31,8 +31,6 @@ export default function LoginForm() {
     UserAuthentication.instance
       .login(emailFieldRef.current.value, passwordFieldRef.current.value)
       .then((data) => {
-        console.log("data returned");
-        
         if (data.error) {
           if (data.error.name === "ValidationError") {
             setIsApiCalled(false);

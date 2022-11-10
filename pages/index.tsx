@@ -1,5 +1,7 @@
+import { withAuth } from "../components/HOC/withAuth";
+
 const Home = () => {
   return <></>;
 };
 
-export default Home;
+export default withAuth(Home);

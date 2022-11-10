@@ -8,30 +8,30 @@ export enum Methods {
 }
 
 export class UserAuthentication {
+  /**
+   *
+   */
+  private constructor() {}
 
-/**
- *
- */
-private constructor() {
-
-}
-
-public static instance = new UserAuthentication();
+  public static instance = new UserAuthentication();
 
   async login(
     emailOrUsername: string,
-    password: string,
+    password: string
     // isEnterprise: boolean
   ) {
-    const res = await fetch(UserAuthenticationEndpoints.instance.authenticateUser, {
-      method: Methods[Methods.POST],
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        identifier: emailOrUsername,
-        password: password,
-        //isEnterprise: isEnterprise,
-      }),
-    });
+    const res = await fetch(
+      UserAuthenticationEndpoints.instance.authenticateUser,
+      {
+        method: Methods[Methods.POST],
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          identifier: emailOrUsername,
+          password: password,
+          //isEnterprise: isEnterprise,
+        }),
+      }
+    );
 
     const data = await res.json();
 
