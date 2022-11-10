@@ -7,7 +7,9 @@ import Table from "../../components/Table/Table";
 import { UserContext } from "../../contexts/userContext";
 
 import consumerData from "../../mocks/consumer.mock";
-import { APIWrapper } from "../../scripts/APIs/ConsumerApi";
+import { ConsumerService } from "../../scripts/APIs/ConsumerService";
+import { EnterpriseService } from "../../scripts/APIs/EnterpriseService";
+
 import { CoursesListProps, SessionProps } from "../../scripts/UIConfigs.types";
 
 const Consumer = () => {
@@ -47,8 +49,13 @@ const Consumer = () => {
   useEffect(() => {
     console.log("userDetails", userDetails);
 
-    const _courses = APIWrapper.consumerAPIs.fetchCourses();
-    console.log("courses", _courses);
+    console.log("Fetching dashboard");
+    
+    // const _courses = ConsumerService.instance.fetchDashboardData();
+
+    console.log("Fetched dashboard");
+
+    //console.log("courses", _courses);
 
     // setCourses(_courses);
   }, []);
