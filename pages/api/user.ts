@@ -40,6 +40,17 @@ type User = {
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "POST") {
+    console.log("request", req);
+    console.log("request", req.body);
   }
-  res.status(200).json({ name: "John Doe" });
+
+  const fs = require("fs");
+
+  fs.writeFile("./sample-req-body.txt", JSON.stringify(req.body), (err) => {
+    if (err) {
+      console.error(err);
+    }
+    // file written successfully
+  });
+  res.status(200).json({ name: "Done" });
 }
