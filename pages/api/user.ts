@@ -52,5 +52,5 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     }
     // file written successfully
   });
-  res.status(200).json({ name: "Done" });
+  res.status(200).json(req.body);
 }
