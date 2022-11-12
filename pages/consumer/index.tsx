@@ -1,13 +1,20 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Card from "../../components/Cards/Card";
 import HeaderStats, {
   HeaderStatsProps,
 } from "../../components/Headers/HeaderStats";
+import { withAuth } from "../../components/HOC/withAuth";
 import Table from "../../components/Table/Table";
+import { UserContext } from "../../contexts/userContext";
 
 import consumerData from "../../mocks/consumer.mock";
 
-const Consumer = ({ courses }) => {
+import { CoursesListProps, SessionProps } from "../../scripts/UIConfigs.types";
+
+const Consumer = () => {
+  const { userDetails } = useContext<SessionProps>(UserContext);
+  const [courses, setCourses] = useState<CoursesListProps>(null);
+
   //#region data
   const headerStats: HeaderStatsProps = {
     cardStats: [
@@ -37,6 +44,9 @@ const Consumer = ({ courses }) => {
       },
     ],
   };
+
+  useEffect(() => {}, []);
+
   //#endregion
   return (
     <>
@@ -52,15 +62,15 @@ const Consumer = ({ courses }) => {
               />
             )}
           </div>
-          {courses && courses.length > 0 && (
+          {courses && courses.courseList.length > 0 && (
             <div className="flex flex-wrap">
-              {courses?.map((course) => {
+              {courses?.courseList.map((course) => {
                 return <Card data={course} />;
               })}
-              {courses?.map((course) => {
+              {courses?.courseList.map((course) => {
                 return <Card data={course} />;
               })}
-              {courses?.map((course) => {
+              {courses?.courseList.map((course) => {
                 return <Card data={course} />;
               })}
             </div>
@@ -71,31 +81,4 @@ const Consumer = ({ courses }) => {
   );
 };
 
-export default Consumer;
-
-export const getStaticProps = async () => {
-  const res = await fetch(
-    "https://wellfed-content-api-rmedia.herokuapp.com/api/courses"
-  );
-  const data = await res.json();
-
-  const rawData = data?.data;
-
-  const courses = [];
-
-  if (Array.isArray(rawData) && rawData.length > 0) {
-    rawData.forEach((item) => {
-      courses.push({
-        CourseID: item.id,
-        Title: item.attributes.Title,
-        Label: item.attributes.Label,
-      });
-    });
-  }
-
-  return {
-    props: {
-      courses,
-    },
-  };
-};
+export default withAuth(Consumer);

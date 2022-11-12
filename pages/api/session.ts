@@ -13,8 +13,6 @@ type Data =
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "POST") {
-    console.log("req received");
-
     setCookie("userDetails", req.body, { req, res, maxAge: 60 * 60 * 24 });
   }
   let userCookie = getCookie("userDetails");

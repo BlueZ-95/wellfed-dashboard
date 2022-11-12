@@ -1,11 +1,9 @@
 import React, { useContext } from "react";
-
 import UserDropdown from "../Dropdowns/UserDropdown";
-import { UserProps } from "../../scripts/UIConfigs.types";
 import { UserContext } from "../../contexts/userContext";
 
 export default function Navbar() {
-  const user: UserProps = useContext(UserContext);
+  const { userDetails } = useContext(UserContext);
 
   return (
     <>
@@ -19,7 +17,9 @@ export default function Navbar() {
             onClick={(e) => e.preventDefault()}
           >
             {`${
-              user.userType === "consumer" ? "Consumer" : "Enterprise"
+              userDetails?.user?.userType === "consumer"
+                ? "Consumer"
+                : "Enterprise"
             } Dashboard`}
           </a>
 

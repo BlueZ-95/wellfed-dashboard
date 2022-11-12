@@ -2,12 +2,13 @@ import React from "react";
 import HeaderStats, {
   HeaderStatsProps,
 } from "../../components/Headers/HeaderStats";
+import { withAuth } from "../../components/HOC/withAuth";
 import Table from "../../components/Table/Table";
 
 export const CurrentContext = React.createContext([]);
 import enterpriseData from "../../mocks/enterprise.mock";
 
-const Consumer = () => {
+const Enterprise = () => {
   //#region data
 
   const headerStats: HeaderStatsProps = {
@@ -59,4 +60,4 @@ const Consumer = () => {
   );
 };
 
-export default Consumer;
+export default withAuth(Enterprise);
