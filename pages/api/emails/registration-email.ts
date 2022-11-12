@@ -1,5 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { env } from "process";
 import { getRegistrationTemplate } from "../../../lib/email-templates/registration";
 import { UserAuthentication } from "../../../scripts/APIs/UserAuthenticationService";
 
@@ -17,6 +16,8 @@ export default async function handler(
 ) {
   // Register User in Strapi
   if (req.method === "POST") {
+    console.info("New user registration request received");
+
     const { customerInput } = req.body.variables;
 
     let registrationData: UserRegistrationProps = {
@@ -39,8 +40,6 @@ export default async function handler(
 
     const sendRegistrationMail = () => {
       let nodemailer = require("nodemailer");
-
-      console.log("username", process.env.EMAIL, process.env.PASSWORD);
 
       const transporter = nodemailer.createTransport({
         service: "gmail",
