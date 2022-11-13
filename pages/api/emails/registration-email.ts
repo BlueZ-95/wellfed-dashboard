@@ -77,6 +77,6 @@ export default async function handler(
     }
     res.status(200);
   } catch (error) {
-    res.status(500).send("Something went wrong at server side.", error);
+    res.status(500).json(error);
   }
 }
