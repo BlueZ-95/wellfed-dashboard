@@ -29,13 +29,13 @@ export default async function handler(
         phone: customerInput.phone,
       };
 
-      await UserAuthentication.instance.register(
-        registrationData.email,
-        registrationData.userName,
-        registrationData.password,
-        registrationData.fullName,
-        registrationData.phone
-      );
+      // await UserAuthentication.instance.register(
+      //   registrationData.email,
+      //   registrationData.userName,
+      //   registrationData.password,
+      //   registrationData.fullName,
+      //   registrationData.phone
+      // );
 
       // Send Mail
 
