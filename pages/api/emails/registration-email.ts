@@ -61,16 +61,14 @@ export default async function handler(
       transporter.sendMail(mailData, function (err, info) {
         if (err) {
           console.log(err);
-
           res.status(err.code);
         } else {
-          res.status(200);
+          console.log("email sent successfully");
+          res.status(200).json(req.body);
         }
       });
     };
 
     sendRegistrationMail();
   }
-
-  res.status(200);
 }
