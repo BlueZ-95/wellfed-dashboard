@@ -12,25 +12,18 @@ export class ConsumerService {
   static instance = new ConsumerService();
 
   async fetchDashboardData() {
-    console.log("Fetching enterprise dashboard data ");
-
-     const userDetails: AuthenticatedUserProps = getUserDetails();
-
-    console.log("before original fetch");
-
+    const userDetails: AuthenticatedUserProps = getUserDetails();
 
     const res = await fetch(ConsumerEndpoints.instance.userCourses, {
       method: Methods[Methods.GET],
-      headers : {"Authorization": `Bearer ${userDetails.token}`}
+      headers: { Authorization: `Bearer ${userDetails.token}` },
     });
 
     console.log("After after original fetch");
 
-
     const data = await res.json();
 
     console.log("res " + data);
-    
 
     return data;
   }
