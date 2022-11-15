@@ -37,4 +37,27 @@ export class UserAuthentication {
 
     return data;
   }
+
+  async register(
+    email: string,
+    userName: string,
+    password: string,
+    fullName: string,
+    phone: string
+  ) {
+    const res = await fetch(UserAuthenticationEndpoints.instance.registerUser, {
+      method: Methods[Methods.POST],
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: email,
+        username: userName,
+        password: password,
+        fullName: fullName,
+        phone: phone,
+        confirmed: true,
+      }),
+    });
+
+    return res.status;
+  }
 }
