@@ -36,16 +36,16 @@ export const enterpriseNavLinks: SidebarProps = {
       href: "/enrolled-users",
       title: "Users",
       icon: "fas fa-qrcode",
-      subLinks: [
-        {
-          href: "#",
-          title: "Assign New User",
-        },
-        {
-          href: "#",
-          title: "Upload Certificate",
-        },
-      ],
+      // subLinks: [
+      //   {
+      //     href: "#",
+      //     title: "Assign New User",
+      //   },
+      //   {
+      //     href: "#",
+      //     title: "Upload Certificate",
+      //   },
+      // ],
     },
   ],
 };

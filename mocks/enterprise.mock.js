@@ -1,38 +1,47 @@
 export default {
   columns: {
     courseId : "Course ID",
-    purchaseStatus : "Purchase Status",
+   
     courseName : "Course Name",
-    totalScreenTime :"Total Screen Time",
-    courseStatus : "Course Status",
+    courseQty : "Course Qty",
+    assignedUsers : "Assigned Users",
+    expiredUsers :"Expired Users",
+    remainingQty : "Remaining Qty",
   },
   courses: [
     {
       courseId: "WF1001",
-      purchaseStatus: "Active",
       courseName: "Food Manager",
-      totalScreenTime: "8 Hours",
-      courseStatus: "InProgress",
+      courseQty : 10,
+      assignedUsers : 6,
+      expiredUsers : 2,
+      remainingQty : 4,
+
+      
       qrCertificate: "https://google.com",
       viewCertificate: "https://google.com",
       scheduleExam: "https://google.com",
     },
     {
       courseId: "WF1002",
-      purchaseStatus: "Expired",
+      
       courseName: "Hotel Management",
-      totalScreenTime: "5 Hours",
-      courseStatus: "Not Initiated",
+      courseQty : 5,
+      assignedUsers : 1,
+      expiredUsers : 0,
+      remainingQty : 4,
       qrCertificate: "https://google.com",
       viewCertificate: "https://google.com",
       scheduleExam: "https://google.com",
     },
     {
       courseId: "WF1003",
-      purchaseStatus: "Active",
+     
       courseName: "Allergy Training",
-      totalScreenTime: "3 Hours",
-      courseStatus: "Completed",
+      courseQty : 15,
+      assignedUsers : 10,
+      expiredUsers : 3,
+      remainingQty : 5,
       qrCertificate: "https://google.com",
       viewCertificate: "https://google.com",
       scheduleExam: "https://google.com",
