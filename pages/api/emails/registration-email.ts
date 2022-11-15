@@ -75,7 +75,7 @@ export default async function handler(
 
     //   sendRegistrationMail();
     // }
-    res.status(200).json(req.body);
+    return res.status(200).json(req.body);
   } catch (error) {
     res.status(500).send(error);
   }
