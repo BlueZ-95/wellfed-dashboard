@@ -15,7 +15,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
-    Register User in Strapi
+    // Register User in Strapi
     if (req.method === "POST") {
       console.info("New user registration request received");
 
