@@ -19,14 +19,14 @@ export default async function handler(
     if (req.method === "POST") {
       console.info("New user registration request received");
 
-      const { customerInput } = req.body.variables;
+      const { email, first_name, last_name, phone } = req.body;
 
       let registrationData: UserRegistrationProps = {
-        email: customerInput.email,
-        userName: customerInput.email,
+        email: email,
+        userName: email,
         password: Math.random().toString(36).slice(-8),
-        fullName: `${customerInput.firstName} ${customerInput.lastName}`,
-        phone: customerInput.phone,
+        fullName: `${first_name} ${last_name}`,
+        phone: phone,
       };
 
       await UserAuthentication.instance.register(
