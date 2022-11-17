@@ -19,8 +19,6 @@ export class ConsumerService {
       headers: { Authorization: `Bearer ${userDetails.token}` },
     });
 
-    console.log("After after original fetch");
-
     const data = await res.json();
 
     console.log("res " + data);
