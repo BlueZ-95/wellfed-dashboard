@@ -43,7 +43,8 @@ export class UserAuthentication {
     userName: string,
     password: string,
     fullName: string,
-    phone: string
+    phone: string,
+    isEnterprise: boolean
   ) {
     const res = await fetch(UserAuthenticationEndpoints.instance.registerUser, {
       method: Methods[Methods.POST],
@@ -54,6 +55,7 @@ export class UserAuthentication {
         password: password,
         fullName: fullName,
         phone: phone,
+        isEnterprise: isEnterprise,
         confirmed: true,
       }),
     });

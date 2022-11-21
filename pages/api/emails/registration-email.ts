@@ -8,6 +8,7 @@ interface UserRegistrationProps {
   password: string;
   fullName: string;
   phone: string;
+  isEnterprise: boolean;
 }
 
 export default async function handler(
@@ -19,7 +20,7 @@ export default async function handler(
     if (req.method === "POST") {
       console.info("New user registration request received");
 
-      const { email, first_name, last_name, phone } = req.body;
+      const { email, first_name, last_name, phone, tags } = req.body;
 
       let registrationData: UserRegistrationProps = {
         email: email,
@@ -27,6 +28,7 @@ export default async function handler(
         password: Math.random().toString(36).slice(-8),
         fullName: `${first_name} ${last_name}`,
         phone: phone,
+        isEnterprise: tags === "Enterprise",
       };
 
       await UserAuthentication.instance.register(
@@ -34,7 +36,8 @@ export default async function handler(
         registrationData.userName,
         registrationData.password,
         registrationData.fullName,
-        registrationData.phone
+        registrationData.phone,
+        registrationData.isEnterprise
       );
 
       // Send Mail
@@ -47,8 +50,8 @@ export default async function handler(
           host: "smtp.gmail.com",
           port: 465,
           auth: {
-            user: process.env.EMAIL,
-            pass: process.env.PASSWORD,
+            user: process.env.NEXT_PUBLIC_EMAIL,
+            pass: process.env.NEXT_PUBLIC_PASSWORD,
           },
         });
 
