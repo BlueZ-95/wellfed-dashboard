@@ -42,16 +42,16 @@ export default async function handler(
 
       // Send Mail
 
-      const sendRegistrationMail = () => {
+      const sendRegistrationMail = async () => {
         let nodemailer = require("nodemailer");
 
         const transporter = nodemailer.createTransport({
           service: "gmail",
           host: "smtp.gmail.com",
-          port: 587,
+          port: 465,
           auth: {
-            user: "wellfedportal@gmail.com",
-            pass: "kvtcbufbloknhsaf",
+            user: process.env.NEXT_PUBLIC_EMAIL,
+            pass: process.env.NEXT_PUBLIC_PASSWORD,
           },
           secure: true,
         });
@@ -63,23 +63,27 @@ export default async function handler(
           html: getRegistrationTemplate(registrationData),
         };
 
-        transporter.sendMail(mailData, function (err, info) {
-          if (err) {
-            console.log(err);
-            res.status(err.code);
-            res
-              .status(200)
-              .send("Something went wrong while sending Registration email");
-          } else {
-            console.log("email sent successfully");
-            res.status(200).json(req.body);
-          }
+        await new Promise((resolve, reject) => {
+          // send mail
+          transporter.sendMail(mailData, (err, info) => {
+            if (err) {
+              console.log(err);
+              reject(err);
+              res.status(err.code);
+              res
+                .status(200)
+                .send("Something went wrong while sending Registration email");
+            } else {
+              console.log("email sent successfully");
+              resolve(info);
+              res.status(200).json(req.body);
+            }
+          });
         });
-      };
 
-      sendRegistrationMail();
+        sendRegistrationMail();
+      };
     }
-    return res.status(200).json(req.body);
   } catch (error) {
     res.status(500).send(error);
   }
