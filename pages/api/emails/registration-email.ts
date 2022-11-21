@@ -18,8 +18,6 @@ export default async function handler(
   try {
     // Register User in Strapi
     if (req.method === "POST") {
-      console.info("New user registration request received");
-
       const { email, first_name, last_name, phone, tags } = req.body;
 
       let registrationData: UserRegistrationProps = {
@@ -31,18 +29,9 @@ export default async function handler(
         isEnterprise: tags === "Enterprise",
       };
 
-      await UserAuthentication.instance.register(
-        registrationData.email,
-        registrationData.userName,
-        registrationData.password,
-        registrationData.fullName,
-        registrationData.phone,
-        registrationData.isEnterprise
-      );
-
       // Send Mail
 
-      const sendRegistrationMail = async () => {
+      const sendRegistrationMailAndRegisterUser = async () => {
         let nodemailer = require("nodemailer");
 
         const transporter = nodemailer.createTransport({
@@ -73,6 +62,7 @@ export default async function handler(
               res
                 .status(200)
                 .send("Something went wrong while sending Registration email");
+              return false;
             } else {
               console.log("email sent successfully");
               resolve(info);
@@ -80,9 +70,20 @@ export default async function handler(
             }
           });
         });
+
+        // console.info("New user registration request received");
+
+        await UserAuthentication.instance.register(
+          registrationData.email,
+          registrationData.userName,
+          registrationData.password,
+          registrationData.fullName,
+          registrationData.phone,
+          registrationData.isEnterprise
+        );
       };
 
-      sendRegistrationMail();
+      sendRegistrationMailAndRegisterUser();
     }
   } catch (error) {
     res.status(500).send(error);
