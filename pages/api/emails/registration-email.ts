@@ -31,7 +31,7 @@ export default async function handler(
 
       // Send Mail
 
-      const sendRegistrationMailAndRegisterUser = async () => {
+      const sendRegistrationMail = async () => {
         let nodemailer = require("nodemailer");
 
         const transporter = nodemailer.createTransport({
@@ -62,7 +62,6 @@ export default async function handler(
               res
                 .status(200)
                 .send("Something went wrong while sending Registration email");
-              return false;
             } else {
               console.log("email sent successfully");
               resolve(info);
@@ -70,9 +69,11 @@ export default async function handler(
             }
           });
         });
+      };
 
-        // console.info("New user registration request received");
+      console.info("New user registration request received");
 
+      sendRegistrationMail().then(async () => {
         await UserAuthentication.instance.register(
           registrationData.email,
           registrationData.userName,
@@ -81,9 +82,7 @@ export default async function handler(
           registrationData.phone,
           registrationData.isEnterprise
         );
-      };
-
-      sendRegistrationMailAndRegisterUser();
+      });
     }
   } catch (error) {
     res.status(500).send(error);
