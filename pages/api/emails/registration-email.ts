@@ -48,10 +48,10 @@ export default async function handler(
         const transporter = nodemailer.createTransport({
           service: "gmail",
           host: "smtp.gmail.com",
-          port: 465,
+          port: 587,
           auth: {
-            user: process.env.NEXT_PUBLIC_EMAIL,
-            pass: process.env.NEXT_PUBLIC_PASSWORD,
+            user: "wellfedportal@gmail.com",
+            pass: "kvtcbufbloknhsaf",
           },
           secure: true,
         });
