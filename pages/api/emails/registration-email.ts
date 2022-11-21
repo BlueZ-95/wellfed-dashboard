@@ -53,6 +53,7 @@ export default async function handler(
             user: process.env.NEXT_PUBLIC_EMAIL,
             pass: process.env.NEXT_PUBLIC_PASSWORD,
           },
+          secure: true,
         });
 
         const mailData = {
