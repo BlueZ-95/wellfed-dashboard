@@ -58,29 +58,33 @@ export default async function handler(
             if (err) {
               console.log(err);
               reject(err);
-              res.status(err.code);
               res
-                .status(200)
+                .status(err.code)
                 .send("Something went wrong while sending Registration email");
             } else {
               console.log("email sent successfully");
               resolve(info);
-              res.status(200).json(req.body);
             }
           });
         });
       };
 
-      await sendRegistrationMail();
-      console.info("New user registration request received");
-      await UserAuthentication.instance.register(
-        registrationData.email,
-        registrationData.userName,
-        registrationData.password,
-        registrationData.fullName,
-        registrationData.phone,
-        registrationData.isEnterprise
-      );
+      await sendRegistrationMail().then(async () => {
+        console.info("New user registration request received");
+
+        await UserAuthentication.instance.register(
+          registrationData.email,
+          registrationData.userName,
+          registrationData.password,
+          registrationData.fullName,
+          registrationData.phone,
+          registrationData.isEnterprise
+        );
+
+        delete registrationData.password;
+
+        res.status(200).json(registrationData);
+      });
     }
   } catch (error) {
     res.status(500).send(error);
