@@ -32,27 +32,27 @@ export default async function handler(
       // Send Mail
 
       const sendRegistrationMail = async () => {
-        let nodemailer = require("nodemailer");
-
-        const transporter = nodemailer.createTransport({
-          service: "gmail",
-          host: "smtp.gmail.com",
-          port: 465,
-          auth: {
-            user: process.env.NEXT_PUBLIC_EMAIL,
-            pass: process.env.NEXT_PUBLIC_PASSWORD,
-          },
-          secure: true,
-        });
-
-        const mailData = {
-          from: process.env.EMAIL,
-          to: registrationData.email,
-          subject: `Account created successfully`,
-          html: getRegistrationTemplate(registrationData),
-        };
-
         await new Promise((resolve, reject) => {
+          let nodemailer = require("nodemailer");
+
+          const transporter = nodemailer.createTransport({
+            service: "gmail",
+            host: "smtp.gmail.com",
+            port: 465,
+            auth: {
+              user: process.env.NEXT_PUBLIC_EMAIL,
+              pass: process.env.NEXT_PUBLIC_PASSWORD,
+            },
+            secure: true,
+          });
+
+          const mailData = {
+            from: process.env.EMAIL,
+            to: registrationData.email,
+            subject: `Account created successfully`,
+            html: getRegistrationTemplate(registrationData),
+          };
+
           // send mail
           transporter.sendMail(mailData, (err, info) => {
             if (err) {
@@ -71,9 +71,9 @@ export default async function handler(
         });
       };
 
-      console.info("New user registration request received");
-
       sendRegistrationMail().then(async () => {
+        console.info("New user registration request received");
+
         await UserAuthentication.instance.register(
           registrationData.email,
           registrationData.userName,
