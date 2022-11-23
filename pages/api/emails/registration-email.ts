@@ -71,18 +71,16 @@ export default async function handler(
         });
       };
 
-      sendRegistrationMail().then(async () => {
-        console.info("New user registration request received");
-
-        await UserAuthentication.instance.register(
-          registrationData.email,
-          registrationData.userName,
-          registrationData.password,
-          registrationData.fullName,
-          registrationData.phone,
-          registrationData.isEnterprise
-        );
-      });
+      await sendRegistrationMail();
+      console.info("New user registration request received");
+      await UserAuthentication.instance.register(
+        registrationData.email,
+        registrationData.userName,
+        registrationData.password,
+        registrationData.fullName,
+        registrationData.phone,
+        registrationData.isEnterprise
+      );
     }
   } catch (error) {
     res.status(500).send(error);
