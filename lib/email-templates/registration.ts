@@ -122,7 +122,7 @@ export const getRegistrationTemplate = (data) => {
                                         <td style="font-family: sans-serif; font-size: 14px; vertical-align: top; border-radius: 5px;" valign="top"> <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;">${data.password}</p></td>
                                       </tr>
                                       <tr>
-                                        <td style="font-family: sans-serif; font-size: 14px; vertical-align: top; border-radius: 5px; text-align: center;" valign="top" align="center" > <a href="https://wellfed-dashboard.netlify.app/login" target="_blank" style="border: solid 1px #3498db; border-radius: 5px; box-sizing: border-box; cursor: pointer; display: inline-block; font-size: 14px; font-weight: bold; margin: 0; padding: 12px 25px; text-decoration: none; text-transform: capitalize; background-color: #0094A3; border-color: #3498db; color: #ffffff;">Click to Login</a> </td>
+                                        <td style="font-family: sans-serif; font-size: 14px; vertical-align: top; border-radius: 5px; text-align: center;" valign="top" align="center" > <a href="https://wellfed-dashboard.netlify.app/login?emailId=${data.email}&isFirstLogin=true" target="_blank" style="border: solid 1px #3498db; border-radius: 5px; box-sizing: border-box; cursor: pointer; display: inline-block; font-size: 14px; font-weight: bold; margin: 0; padding: 12px 25px; text-decoration: none; text-transform: capitalize; background-color: #0094A3; border-color: #3498db; color: #ffffff;">Reset Password</a> </td>
                                       </tr>
                                     </tbody>
                                   </table>
@@ -130,7 +130,7 @@ export const getRegistrationTemplate = (data) => {
                               </tr>
                             </tbody>
                           </table>
-                          <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;">Note: Reset password using email id if the above credentials don't work.</p>
+                          <p style="font-family: sans-serif; font-size: 14px; font-weight: bold; margin: 0; margin-bottom: 15px;">Note: Please reset your password using above link before getting started.</p>
                           <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; ">Thank You,</p>
   <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;">
   Team Well Fed Seminars, Inc.</p>
@@ -154,8 +154,6 @@ export const getRegistrationTemplate = (data) => {
                 <a href="tel:+1(847)571-8540">+1 (847) 571-8540</a> or Email us at
                 <a href="mailto: info@well-fed.com">info@well-fed.com</a>
               </div>
-                      
-                      
                     </td>
                   </tr>
                   <tr>

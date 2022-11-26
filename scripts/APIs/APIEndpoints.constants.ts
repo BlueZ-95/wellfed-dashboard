@@ -16,6 +16,10 @@ export class UserAuthenticationEndpoints extends BaseEndpoints {
   get registerUser(): string {
     return `${this.BaseUrl}/api/auth/local/register`;
   }
+
+  get changePassword(): string {
+    return `${this.BaseUrl}/api/auth/change-password`;
+  }
 }
 
 export class ConsumerEndpoints extends BaseEndpoints {

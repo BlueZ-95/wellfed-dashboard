@@ -15,11 +15,7 @@ export class UserAuthentication {
 
   public static instance = new UserAuthentication();
 
-  async login(
-    emailOrUsername: string,
-    password: string
-    // isEnterprise: boolean
-  ) {
+  async login(emailOrUsername: string, password: string) {
     const res = await fetch(
       UserAuthenticationEndpoints.instance.authenticateUser,
       {
@@ -28,7 +24,6 @@ export class UserAuthentication {
         body: JSON.stringify({
           identifier: emailOrUsername,
           password: password,
-          //isEnterprise: isEnterprise,
         }),
       }
     );
@@ -61,5 +56,39 @@ export class UserAuthentication {
     });
 
     return res.status;
+  }
+
+  async changePassword(
+    email: string,
+    currentPassword: string,
+    newPassword: string,
+    newPasswordConfirmation: string
+  ) {
+    const verifiedLogin = await this.login(email, currentPassword);
+
+    if (verifiedLogin.error) {
+      throw verifiedLogin.error;
+    }
+
+    const res = await fetch(
+      UserAuthenticationEndpoints.instance.changePassword,
+      {
+        method: Methods[Methods.POST],
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${verifiedLogin.jwt}`,
+        },
+        body: JSON.stringify({
+          currentPassword: currentPassword,
+          password: newPassword,
+          passwordConfirmation: newPasswordConfirmation,
+        }),
+      }
+    );
+
+    const data = await res.json();
+    console.log(data);
+
+    return data;
   }
 }
