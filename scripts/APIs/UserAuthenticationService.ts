@@ -1,5 +1,3 @@
-//import { AUTHENTICATION_ENDPOINTS } from "./APIEndpoints.constants";
-
 import { UserAuthenticationEndpoints } from "./APIEndpoints.constants";
 
 export enum Methods {
@@ -87,8 +85,23 @@ export class UserAuthentication {
     );
 
     const data = await res.json();
-    console.log(data);
 
     return data;
+  }
+
+  async isExistingUser(email: string) {
+    const res = await fetch(
+      UserAuthenticationEndpoints.instance.checkExistingUser.replace(
+        "{email}",
+        email
+      ),
+      {
+        method: Methods[Methods.GET],
+      }
+    );
+
+    const data = await res.json();
+
+    return data.length > 0 ? true : false;
   }
 }

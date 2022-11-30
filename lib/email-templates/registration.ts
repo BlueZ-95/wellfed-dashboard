@@ -1,4 +1,37 @@
-export const getRegistrationTemplate = (data) => {
+const newUserTemplate = {
+  form: `<tr>
+<td style="font-family: sans-serif; font-size: 14px; vertical-align: top; border-radius: 5px;" valign="top"> <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;"><strong>USERNAME </strong></p></td>
+</tr>
+<tr>
+<td style="font-family: sans-serif; font-size: 14px; vertical-align: top; border-radius: 5px;" valign="top"> <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;">{Email}</p></td>
+</tr>
+<tr>
+<td style="font-family: sans-serif; font-size: 14px; vertical-align: top; border-radius: 5px;" valign="top"> <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;"><strong>PASSWORD </strong></p></td>
+</tr>
+<tr>
+<td style="font-family: sans-serif; font-size: 14px; vertical-align: top; border-radius: 5px;" valign="top"> <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;">{Password}</p></td>
+</tr>
+<tr>
+<td style="font-family: sans-serif; font-size: 14px; vertical-align: top; border-radius: 5px; text-align: center;" valign="top" align="center" > <a href="https://wellfed-dashboard.netlify.app/login?emailId={Email}&isFirstLogin=true" target="_blank" style="border: solid 1px #3498db; border-radius: 5px; box-sizing: border-box; cursor: pointer; display: inline-block; font-size: 14px; font-weight: bold; margin: 0; padding: 12px 25px; text-decoration: none; text-transform: capitalize; background-color: #0094A3; border-color: #3498db; color: #ffffff;">Reset Password</a> </td>
+</tr>`,
+  note: "Please reset your password using given link before getting started. Use above password as your current password.",
+};
+
+const existingUserTemplate = {
+  form: `
+  <tr>
+    <td style="font-family: sans-serif; font-size: 14px; vertical-align: top; border-radius: 5px;" valign="top"> <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;"><strong>EMAIL </strong></p></td>
+  </tr>
+  <tr>
+    <td style="font-family: sans-serif; font-size: 14px; vertical-align: top; border-radius: 5px;" valign="top"> <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;">{Email}</p></td>
+  </tr>
+  <tr>
+    <td style="font-family: sans-serif; font-size: 14px; vertical-align: top; border-radius: 5px; text-align: center;" valign="top" align="center" > <a href="https://wellfed-dashboard.netlify.app/login" target="_blank" style="border: solid 1px #3498db; border-radius: 5px; box-sizing: border-box; cursor: pointer; display: inline-block; font-size: 14px; font-weight: bold; margin: 0; padding: 12px 25px; text-decoration: none; text-transform: capitalize; background-color: #0094A3; border-color: #3498db; color: #ffffff;">Login</a> </td>
+  </tr>`,
+  note: "Please use above email to login.",
+};
+
+export const getRegistrationTemplate = (data, isExistingUser = false) => {
   return `<!DOCTYPE html>
   <html>
     <head>
@@ -109,28 +142,30 @@ export const getRegistrationTemplate = (data) => {
                                 <td align="left" style="font-family: sans-serif; font-size: 14px; vertical-align: top; padding-bottom: 15px;" valign="top">
                                   <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: auto;">
                                     <tbody>
-                                        <tr>
-                                        <td style="font-family: sans-serif; font-size: 14px; vertical-align: top; border-radius: 5px;" valign="top"> <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;"><strong>USERNAME </strong></p></td>
-                                      </tr>
-                                      <tr>
-                                        <td style="font-family: sans-serif; font-size: 14px; vertical-align: top; border-radius: 5px;" valign="top"> <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;">${data.email}</p></td>
-                                      </tr>
-                                      <tr>
-                                        <td style="font-family: sans-serif; font-size: 14px; vertical-align: top; border-radius: 5px;" valign="top"> <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;"><strong>PASSWORD </strong></p></td>
-                                      </tr>
-                                      <tr>
-                                        <td style="font-family: sans-serif; font-size: 14px; vertical-align: top; border-radius: 5px;" valign="top"> <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;">${data.password}</p></td>
-                                      </tr>
-                                      <tr>
-                                        <td style="font-family: sans-serif; font-size: 14px; vertical-align: top; border-radius: 5px; text-align: center;" valign="top" align="center" > <a href="https://wellfed-dashboard.netlify.app/login?emailId=${data.email}&isFirstLogin=true" target="_blank" style="border: solid 1px #3498db; border-radius: 5px; box-sizing: border-box; cursor: pointer; display: inline-block; font-size: 14px; font-weight: bold; margin: 0; padding: 12px 25px; text-decoration: none; text-transform: capitalize; background-color: #0094A3; border-color: #3498db; color: #ffffff;">Reset Password</a> </td>
-                                      </tr>
+                                    ${
+                                      isExistingUser
+                                        ? existingUserTemplate.form.replace(
+                                            "{Email}",
+                                            data.email
+                                          )
+                                        : newUserTemplate.form
+                                            .replace("{Email}", data.email)
+                                            .replace(
+                                              "{Password}",
+                                              data.password
+                                            )
+                                    }
                                     </tbody>
                                   </table>
                                 </td>
                               </tr>
                             </tbody>
                           </table>
-                          <p style="font-family: sans-serif; font-size: 14px; font-weight: bold; margin: 0; margin-bottom: 15px;">Note: Please reset your password using above link before getting started.</p>
+                          <p style="font-family: sans-serif; font-size: 14px; font-weight: bold; margin: 0; margin-bottom: 15px;">Note: ${
+                            isExistingUser
+                              ? existingUserTemplate.note
+                              : newUserTemplate.note
+                          }</p>
                           <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; ">Thank You,</p>
   <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;">
   Team Well Fed Seminars, Inc.</p>

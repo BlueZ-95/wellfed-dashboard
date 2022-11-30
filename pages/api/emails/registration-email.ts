@@ -18,7 +18,7 @@ export default async function handler(
   try {
     // Register User in Strapi
     if (req.method === "POST") {
-      const { email, first_name, last_name, phone, tags } = req.body;
+      const { email, first_name, last_name, phone, tags } = req.body.customer;
 
       let registrationData: UserRegistrationProps = {
         email: email,
@@ -29,8 +29,11 @@ export default async function handler(
         isEnterprise: tags === "Enterprise",
       };
 
-      // Send Mail
+      const isExistingUser = await UserAuthentication.instance.isExistingUser(
+        registrationData.email
+      );
 
+      // Send Mail
       const sendRegistrationMail = async () => {
         await new Promise((resolve, reject) => {
           let nodemailer = require("nodemailer");
@@ -50,7 +53,7 @@ export default async function handler(
             from: process.env.EMAIL,
             to: registrationData.email,
             subject: `Account created successfully`,
-            html: getRegistrationTemplate(registrationData),
+            html: getRegistrationTemplate(registrationData, isExistingUser),
           };
 
           // send mail
@@ -72,14 +75,16 @@ export default async function handler(
       await sendRegistrationMail().then(async () => {
         console.info("New user registration request received");
 
-        await UserAuthentication.instance.register(
-          registrationData.email,
-          registrationData.userName,
-          registrationData.password,
-          registrationData.fullName,
-          registrationData.phone,
-          registrationData.isEnterprise
-        );
+        if (!isExistingUser) {
+          await UserAuthentication.instance.register(
+            registrationData.email,
+            registrationData.userName,
+            registrationData.password,
+            registrationData.fullName,
+            registrationData.phone,
+            registrationData.isEnterprise
+          );
+        }
 
         delete registrationData.password;
 

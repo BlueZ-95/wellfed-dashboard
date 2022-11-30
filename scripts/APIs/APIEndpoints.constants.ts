@@ -20,6 +20,10 @@ export class UserAuthenticationEndpoints extends BaseEndpoints {
   get changePassword(): string {
     return `${this.BaseUrl}/api/auth/change-password`;
   }
+
+  get checkExistingUser(): string {
+    return `${this.BaseUrl}/api/users?filters[email]={email}`;
+  }
 }
 
 export class ConsumerEndpoints extends BaseEndpoints {
