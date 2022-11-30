@@ -144,13 +144,13 @@ export const getRegistrationTemplate = (data, isExistingUser = false) => {
                                     <tbody>
                                     ${
                                       isExistingUser
-                                        ? existingUserTemplate.form.replace(
+                                        ? existingUserTemplate.form.replaceAll(
                                             "{Email}",
                                             data.email
                                           )
                                         : newUserTemplate.form
-                                            .replace("{Email}", data.email)
-                                            .replace(
+                                            .replaceAll("{Email}", data.email)
+                                            .replaceAll(
                                               "{Password}",
                                               data.password
                                             )
