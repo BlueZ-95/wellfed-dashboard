@@ -52,7 +52,9 @@ export default async function handler(
           const mailData = {
             from: process.env.EMAIL,
             to: registrationData.email,
-            subject: `Account created successfully`,
+            subject: isExistingUser
+              ? "New course successfully purchased"
+              : "Account created successfully",
             html: getRegistrationTemplate(registrationData, isExistingUser),
           };
 
