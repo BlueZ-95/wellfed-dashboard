@@ -1,45 +1,28 @@
+import { getCookie } from "cookies-next";
 import Image from "next/image";
-import { useContext, useRef, useState } from "react";
+import { useRouter } from "next/router";
+import { useRef, useState } from "react";
 import { UserContext } from "../../contexts/userContext";
-// import { APIENDPOINTS } from "../../scripts/APIs/APIEndpoints.constants";
 import { UserAuthentication } from "../../scripts/APIs/UserAuthenticationService";
 import { AuthenticatedUserProps } from "../../scripts/UIConfigs.types";
 
-export default function LoginForm() {
-  const { signIn } = useContext(UserContext);
-
+export default function ForgotPassword() {
   const emailFieldRef = useRef(null);
-  const passwordFieldRef = useRef(null);
 
-  const [errorMessage, setErrorMessage] = useState("");
+  const [message, setMessage] = useState("");
   const [isApiCalled, setIsApiCalled] = useState(false);
 
-  const initiateLogin = () => {
-    setIsApiCalled(true);
-
+  const initForgotPasswordAPI = () => {
     UserAuthentication.instance
-      .login(emailFieldRef.current.value, passwordFieldRef.current.value)
+      .forgotPassword(emailFieldRef.current.value)
       .then((data) => {
-        if (data.error) {
-          if (data.error.name === "ValidationError") {
-            setIsApiCalled(false);
-            setErrorMessage("Email/Username or Password is wrong");
-            return false;
-          }
-        }
-
-        const authenticatedUserdata: AuthenticatedUserProps = {
-          token: data.jwt,
-          user: {
-            userName: data.user.username,
-            email: data.user.email,
-            userType: data.user.isEnterprise ? "enterprise" : "consumer",
-          },
-        };
-
-        signIn(authenticatedUserdata);
+        setMessage("An email is sent to reset the password");
       })
-      .catch((err) => console.error("User not found"));
+      .catch((err) => {
+        console.error("Something went wrong", err.message);
+        setIsApiCalled(false);
+        setMessage(err.message);
+      });
   };
 
   return (
@@ -59,6 +42,12 @@ export default function LoginForm() {
                 />
                 <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-200 border-0 mt-10">
                   <div className="flex-auto px-4 lg:px-10 py-10">
+                    <h2 className="block uppercase text-blueGray-600 text-l font-bold mb-2">
+                      Forgot Password?
+                    </h2>
+                    <p className="mb-4">
+                      Enter the email address you used when you joined.
+                    </p>
                     <form>
                       <div className="relative w-full mb-3">
                         <label
@@ -68,32 +57,17 @@ export default function LoginForm() {
                           Email
                         </label>
                         <input
-                          type="text"
+                          type="email"
                           name="email"
                           ref={emailFieldRef}
                           className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          placeholder="Email or Username"
-                        />
-                      </div>
-
-                      <div className="relative w-full mb-3">
-                        <label
-                          className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                          htmlFor="grid-password"
-                        >
-                          Password
-                        </label>
-                        <input
-                          type="password"
-                          ref={passwordFieldRef}
-                          className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          placeholder="Password"
+                          placeholder="Enter your email"
                         />
                       </div>
 
                       <div className="text-center mt-6">
                         <button
-                          onClick={initiateLogin}
+                          onClick={initForgotPasswordAPI}
                           className={`${
                             isApiCalled
                               ? "bg-white text-wellfedPrimaryBlue border border-wellfedPrimaryBlue pointer-events-none"
@@ -118,25 +92,13 @@ export default function LoginForm() {
                               />
                             </svg>
                           ) : (
-                            "Sign In"
+                            "Send Email"
                           )}
                         </button>
                       </div>
-                      <div className="forgot-password-label">
-                        <label
-                          className="text-blueGray-500 cursor-pointer"
-                          onClick={() => {
-                            window.location.href +=
-                              "?isForgotPasswordFlow=true";
-                          }}
-                        >
-                          Forgot password?
-                        </label>
-                      </div>
-
-                      {errorMessage && (
+                      {message && (
                         <div className="error-label">
-                          <label className="text-red-700">{errorMessage}</label>
+                          <label className="text-red-700">{message}</label>
                         </div>
                       )}
                     </form>

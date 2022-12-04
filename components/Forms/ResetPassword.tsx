@@ -2,22 +2,22 @@ import { getCookie } from "cookies-next";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useRef, useState } from "react";
-import { UserContext } from "../../contexts/userContext";
 import { UserAuthentication } from "../../scripts/APIs/UserAuthenticationService";
 import { AuthenticatedUserProps } from "../../scripts/UIConfigs.types";
 
-export default function ResetPassword({ emailId, isFirstLogin }) {
+export default function ResetPassword({ emailId, isFirstLogin, code }) {
   const router = useRouter();
   const currentPasswordFieldRef = useRef(null);
   const newPasswordFieldRef = useRef(null);
   const confirmPasswordFieldRef = useRef(null);
+  const emailFieldRef = useRef(null);
 
   const [errorMessage, setErrorMessage] = useState("");
   const [isApiCalled, setIsApiCalled] = useState(false);
 
   const initiateChangePassword = () => {
     if (
-      !currentPasswordFieldRef.current.value ||
+      (!code && !currentPasswordFieldRef.current.value) ||
       !newPasswordFieldRef.current.value ||
       !confirmPasswordFieldRef.current.value
     ) {
@@ -29,9 +29,10 @@ export default function ResetPassword({ emailId, isFirstLogin }) {
     UserAuthentication.instance
       .changePassword(
         emailId,
-        currentPasswordFieldRef.current.value,
+        currentPasswordFieldRef.current?.value,
         newPasswordFieldRef.current.value,
-        confirmPasswordFieldRef.current.value
+        confirmPasswordFieldRef.current.value,
+        code
       )
       .then((data) => {
         router.push("/login");
@@ -64,21 +65,24 @@ export default function ResetPassword({ emailId, isFirstLogin }) {
                       Reset Your Password
                     </h2>
                     <form>
-                      <div className="relative w-full mb-3">
-                        <label
-                          className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                          htmlFor="grid-password"
-                        >
-                          Old Password
-                        </label>
-                        <input
-                          type="password"
-                          name="oldpassword"
-                          ref={currentPasswordFieldRef}
-                          className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          placeholder="Old Password"
-                        />
-                      </div>
+                      {!code && (
+                        <div className="relative w-full mb-3">
+                          <label
+                            className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                            htmlFor="grid-password"
+                          >
+                            Old Password
+                          </label>
+                          <input
+                            type="password"
+                            name="oldpassword"
+                            ref={currentPasswordFieldRef}
+                            className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                            placeholder="Old Password"
+                          />
+                        </div>
+                      )}
+
                       <div className="relative w-full mb-3">
                         <label
                           className="block uppercase text-blueGray-600 text-xs font-bold mb-2"

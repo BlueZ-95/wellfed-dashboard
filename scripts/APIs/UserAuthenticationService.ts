@@ -60,27 +60,44 @@ export class UserAuthentication {
     email: string,
     currentPassword: string,
     newPassword: string,
-    newPasswordConfirmation: string
+    newPasswordConfirmation: string,
+    code: string
   ) {
-    const verifiedLogin = await this.login(email, currentPassword);
+    let verifiedLogin;
+    if (currentPassword) {
+      verifiedLogin = await this.login(email, currentPassword);
 
-    if (verifiedLogin.error) {
-      throw verifiedLogin.error;
+      if (verifiedLogin.error) {
+        throw verifiedLogin.error;
+      }
     }
 
+    const getRequestObject = (): object => {
+      const obj: { [key: string]: string } = {
+        password: newPassword,
+        passwordConfirmation: newPasswordConfirmation,
+      };
+
+      // If current flow is change-password flow
+      if (currentPassword) obj.currentPassword = currentPassword;
+
+      // If current flow is forgot-password flow
+      if (code) obj.code = code;
+
+      return obj;
+    };
+
     const res = await fetch(
-      UserAuthenticationEndpoints.instance.changePassword,
+      UserAuthenticationEndpoints.instance[
+        currentPassword ? "changePassword" : "resetPassword"
+      ],
       {
         method: Methods[Methods.POST],
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${verifiedLogin.jwt}`,
+          Authorization: verifiedLogin && `Bearer ${verifiedLogin.jwt}`,
         },
-        body: JSON.stringify({
-          currentPassword: currentPassword,
-          password: newPassword,
-          passwordConfirmation: newPasswordConfirmation,
-        }),
+        body: JSON.stringify(getRequestObject()),
       }
     );
 
@@ -103,5 +120,22 @@ export class UserAuthentication {
     const data = await res.json();
 
     return data.length > 0 ? true : false;
+  }
+
+  async forgotPassword(email: string) {
+    const res = await fetch(
+      UserAuthenticationEndpoints.instance.forgotPassword,
+      {
+        method: Methods[Methods.POST],
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: email,
+        }),
+      }
+    );
+
+    const data = await res.json();
+
+    return data;
   }
 }

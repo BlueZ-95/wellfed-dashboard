@@ -21,8 +21,16 @@ export class UserAuthenticationEndpoints extends BaseEndpoints {
     return `${this.BaseUrl}/api/auth/change-password`;
   }
 
+  get resetPassword(): string {
+    return `${this.BaseUrl}/api/auth/reset-password`;
+  }
+
   get checkExistingUser(): string {
     return `${this.BaseUrl}/api/users?filters[email]={email}`;
+  }
+
+  get forgotPassword(): string {
+    return `${this.BaseUrl}/api/auth/forgot-password`;
   }
 }
 
