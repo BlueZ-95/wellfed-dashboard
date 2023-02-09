@@ -2,22 +2,21 @@ import { METHODS } from "http";
 import { getUserDetails } from "../session";
 import { AuthenticatedUserProps } from "../UIConfigs.types";
 import { EnterpriseEndpoints } from "./APIEndpoints.constants";
-import { Methods } from "./UserAuthenticationService";
+import { Methods } from "./Enums";
 //import { ENTERPRISE_ENDPOINTS } from "./APIEndpoints.constants";
 
 export class EnterpriseService {
-
   private constructor() {}
 
   static instance = new EnterpriseService();
 
-  async fetchDashboardData(){
+  async fetchDashboardData() {
     console.log("Fetching enterprise dashboard data ");
 
     const userDetails: AuthenticatedUserProps = getUserDetails();
 
     const res = await fetch(EnterpriseEndpoints.instance.dashboardData, {
-      method : Methods[Methods.GET],
+      method: Methods[Methods.GET],
       headers: {
         Authorization: `Bearer ${userDetails.token}`,
       },
@@ -34,10 +33,10 @@ export class EnterpriseService {
     const userDetails: AuthenticatedUserProps = getUserDetails();
 
     const res = await fetch(EnterpriseEndpoints.instance.enrolledUsers, {
-      method : Methods[Methods.GET],
+      method: Methods[Methods.GET],
       headers: {
-        "Authorization": `Bearer ${userDetails.token}`,
-        "Content-Type": "application/json" 
+        Authorization: `Bearer ${userDetails.token}`,
+        "Content-Type": "application/json",
       },
     });
 
@@ -46,13 +45,13 @@ export class EnterpriseService {
     return data;
   }
 
-  async assignNewUser(name : string, email : string, outlet : string) {
+  async assignNewUser(name: string, email: string, outlet: string) {
     console.log("Assign new user ");
 
     const userDetails: AuthenticatedUserProps = getUserDetails();
 
     const res = await fetch(EnterpriseEndpoints.instance.assignNewUser, {
-      method : Methods[Methods.POST],
+      method: Methods[Methods.POST],
       headers: {
         Authorization: `Bearer ${userDetails.token}`,
       },
@@ -68,13 +67,17 @@ export class EnterpriseService {
     return data;
   }
 
-  async uploadThirdPartyCertificates(name : string, email : string, outlet : string) {
+  async uploadThirdPartyCertificates(
+    name: string,
+    email: string,
+    outlet: string
+  ) {
     console.log("Assign new user ");
 
     const userDetails: AuthenticatedUserProps = getUserDetails();
 
     const res = await fetch(EnterpriseEndpoints.instance.assignNewUser, {
-      method : Methods[Methods.POST],
+      method: Methods[Methods.POST],
       headers: {
         Authorization: `Bearer ${userDetails.token}`,
       },
@@ -89,5 +92,4 @@ export class EnterpriseService {
 
     return data;
   }
-
 }

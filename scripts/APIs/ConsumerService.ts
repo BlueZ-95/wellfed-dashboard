@@ -3,7 +3,7 @@ import { json } from "stream/consumers";
 import { getUserDetails } from "../session";
 import { AuthenticatedUserProps, CoursesListProps } from "../UIConfigs.types";
 import { ConsumerEndpoints } from "./APIEndpoints.constants";
-import { Methods } from "./UserAuthenticationService";
+import { Methods } from "./Enums";
 // import { APIWrapper } from "./APIWrapper";
 
 export class ConsumerService {
@@ -18,8 +18,6 @@ export class ConsumerService {
       method: Methods[Methods.GET],
       headers: { Authorization: `Bearer ${userDetails.token}` },
     });
-
-    console.log("After after original fetch");
 
     const data = await res.json();
 

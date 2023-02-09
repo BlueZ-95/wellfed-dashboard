@@ -2,7 +2,7 @@
 
 export class BaseEndpoints {
   get BaseUrl(): string {
-    return process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:1337";
+    return process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:1338";
   }
 }
 
@@ -15,6 +15,22 @@ export class UserAuthenticationEndpoints extends BaseEndpoints {
 
   get registerUser(): string {
     return `${this.BaseUrl}/api/auth/local/register`;
+  }
+
+  get changePassword(): string {
+    return `${this.BaseUrl}/api/auth/change-password`;
+  }
+
+  get resetPassword(): string {
+    return `${this.BaseUrl}/api/auth/reset-password`;
+  }
+
+  get checkExistingUser(): string {
+    return `${this.BaseUrl}/api/users?filters[email]={email}`;
+  }
+
+  get forgotPassword(): string {
+    return `${this.BaseUrl}/api/auth/forgot-password`;
   }
 }
 
@@ -46,6 +62,14 @@ export class EnterpriseEndpoints extends BaseEndpoints {
 
   get assignNewUser(): string {
     return `${this.BaseUrl}/api/enrolled-users?filters`;
+  }
+}
+
+export class AdminEndpoints extends BaseEndpoints {
+  static instance = new AdminEndpoints();
+
+  get courseCreation(): string {
+    return `${this.BaseUrl}/api/products`;
   }
 }
 

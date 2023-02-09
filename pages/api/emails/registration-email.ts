@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getRegistrationTemplate } from "../../../lib/email-templates/registration";
-import { UserAuthentication } from "../../../scripts/APIs/UserAuthenticationService";
+import { UserAuthenticationService } from "../../../scripts/APIs/UserAuthenticationService";
 
 interface UserRegistrationProps {
   userName: string;
@@ -8,6 +8,7 @@ interface UserRegistrationProps {
   password: string;
   fullName: string;
   phone: string;
+  isEnterprise: boolean;
 }
 
 export default async function handler(
@@ -17,66 +18,85 @@ export default async function handler(
   try {
     // Register User in Strapi
     if (req.method === "POST") {
-      console.info("New user registration request received");
-
-      const { customerInput } = req.body.variables;
+      const { email, first_name, last_name, phone, tags } = req.body.customer;
 
       let registrationData: UserRegistrationProps = {
-        email: customerInput.email,
-        userName: customerInput.email,
+        email: email,
+        userName: email,
         password: Math.random().toString(36).slice(-8),
-        fullName: `${customerInput.firstName} ${customerInput.lastName}`,
-        phone: customerInput.phone,
+        fullName: `${first_name} ${last_name}`,
+        phone: phone,
+        isEnterprise: tags === "Enterprise",
       };
 
-      await UserAuthentication.instance.register(
-        registrationData.email,
-        registrationData.userName,
-        registrationData.password,
-        registrationData.fullName,
-        registrationData.phone
-      );
+      const isExistingUser =
+        await UserAuthenticationService.instance.isExistingUser(
+          registrationData.email
+        );
 
       // Send Mail
+      const sendRegistrationMail = async () => {
+        await new Promise((resolve, reject) => {
+          let nodemailer = require("nodemailer");
 
-      const sendRegistrationMail = () => {
-        let nodemailer = require("nodemailer");
+          const transporter = nodemailer.createTransport({
+            service: "gmail",
+            host: "smtp.gmail.com",
+            port: 465,
+            auth: {
+              user: process.env.NEXT_PUBLIC_EMAIL,
+              pass: process.env.NEXT_PUBLIC_PASSWORD,
+            },
+            secure: true,
+          });
 
-        const transporter = nodemailer.createTransport({
-          service: "gmail",
-          host: "smtp.gmail.com",
-          port: 465,
-          auth: {
-            user: process.env.EMAIL,
-            pass: process.env.PASSWORD,
-          },
-        });
+          const mailData = {
+            from: process.env.EMAIL,
+            to: registrationData.email,
+            subject: isExistingUser
+              ? "New course successfully purchased"
+              : "Account created successfully",
+            html: getRegistrationTemplate(registrationData, isExistingUser),
+          };
 
-        const mailData = {
-          from: process.env.EMAIL,
-          to: registrationData.email,
-          subject: `Account created successfully`,
-          html: getRegistrationTemplate(registrationData),
-        };
-
-        transporter.sendMail(mailData, function (err, info) {
-          if (err) {
-            console.log(err);
-            res.status(err.code);
-            res
-              .status(200)
-              .send("Something went wrong while sending Registration email");
-          } else {
-            console.log("email sent successfully");
-            res.status(200).json(req.body);
-          }
+          // send mail
+          transporter.sendMail(mailData, (err, info) => {
+            if (err) {
+              console.log(err);
+              reject(err);
+              res
+                .status(err.code)
+                .send("Something went wrong while sending Registration email");
+            } else {
+              console.log("email sent successfully");
+              resolve(info);
+            }
+          });
         });
       };
 
-      sendRegistrationMail();
+      await sendRegistrationMail().then(async () => {
+        console.info("New user registration request received");
+
+        if (!isExistingUser) {
+          await UserAuthenticationService.instance.register(
+            registrationData.email,
+            registrationData.userName,
+            registrationData.password,
+            registrationData.fullName,
+            registrationData.phone,
+            registrationData.isEnterprise
+          );
+        }
+
+        delete registrationData.password;
+
+        res.status(200).json(registrationData);
+      });
+    } else {
+      res.status(200).send("Success");
     }
-    res.status(200);
   } catch (error) {
-    res.status(500).send("Something went wrong at server side.", error);
+    res.status(500).send(error);
   }
 }

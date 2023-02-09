@@ -1,45 +1,47 @@
+import { getCookie } from "cookies-next";
 import Image from "next/image";
-import { useContext, useRef, useState } from "react";
-import { UserContext } from "../../contexts/userContext";
-// import { APIENDPOINTS } from "../../scripts/APIs/APIEndpoints.constants";
+import { useRouter } from "next/router";
+import { useRef, useState } from "react";
 import { UserAuthentication } from "../../scripts/APIs/UserAuthenticationService";
 import { AuthenticatedUserProps } from "../../scripts/UIConfigs.types";
 
-export default function LoginForm() {
-  const { signIn } = useContext(UserContext);
-
+export default function ResetPassword({ emailId, isFirstLogin, code }) {
+  const router = useRouter();
+  const currentPasswordFieldRef = useRef(null);
+  const newPasswordFieldRef = useRef(null);
+  const confirmPasswordFieldRef = useRef(null);
   const emailFieldRef = useRef(null);
-  const passwordFieldRef = useRef(null);
 
   const [errorMessage, setErrorMessage] = useState("");
   const [isApiCalled, setIsApiCalled] = useState(false);
 
-  const initiateLogin = () => {
+  const initiateChangePassword = () => {
+    if (
+      (!code && !currentPasswordFieldRef.current.value) ||
+      !newPasswordFieldRef.current.value ||
+      !confirmPasswordFieldRef.current.value
+    ) {
+      setErrorMessage("Please provide all fields");
+      return;
+    }
     setIsApiCalled(true);
 
     UserAuthentication.instance
-      .login(emailFieldRef.current.value, passwordFieldRef.current.value)
+      .changePassword(
+        emailId,
+        currentPasswordFieldRef.current?.value,
+        newPasswordFieldRef.current.value,
+        confirmPasswordFieldRef.current.value,
+        code
+      )
       .then((data) => {
-        if (data.error) {
-          if (data.error.name === "ValidationError") {
-            setIsApiCalled(false);
-            setErrorMessage("Email/Username or Password is wrong");
-            return false;
-          }
-        }
-
-        const authenticatedUserdata: AuthenticatedUserProps = {
-          token: data.jwt,
-          user: {
-            userName: data.user.username,
-            email: data.user.email,
-            userType: data.user.isEnterprise ? "enterprise" : "consumer",
-          },
-        };
-
-        signIn(authenticatedUserdata);
+        router.push("/login");
       })
-      .catch((err) => console.error("User not found"));
+      .catch((err) => {
+        console.error("Something went wrong", err.message);
+        setIsApiCalled(false);
+        setErrorMessage(err.message);
+      });
   };
 
   return (
@@ -59,41 +61,62 @@ export default function LoginForm() {
                 />
                 <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-200 border-0 mt-10">
                   <div className="flex-auto px-4 lg:px-10 py-10">
+                    <h2 className="block uppercase text-blueGray-600 text-xl font-bold mb-10 text-center">
+                      Reset Your Password
+                    </h2>
                     <form>
-                      <div className="relative w-full mb-3">
-                        <label
-                          className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
-                          htmlFor="grid-password"
-                        >
-                          Email
-                        </label>
-                        <input
-                          type="text"
-                          name="email"
-                          ref={emailFieldRef}
-                          className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          placeholder="Email or Username"
-                        />
-                      </div>
+                      {!code && (
+                        <div className="relative w-full mb-3">
+                          <label
+                            className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                            htmlFor="grid-password"
+                          >
+                            Old Password
+                          </label>
+                          <input
+                            type="password"
+                            name="oldpassword"
+                            ref={currentPasswordFieldRef}
+                            className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                            placeholder="Old Password"
+                          />
+                        </div>
+                      )}
 
                       <div className="relative w-full mb-3">
                         <label
                           className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
                           htmlFor="grid-password"
                         >
-                          Password
+                          New Password
                         </label>
                         <input
                           type="password"
-                          ref={passwordFieldRef}
+                          name="newpassword"
+                          ref={newPasswordFieldRef}
                           className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                          placeholder="Password"
+                          placeholder="New Password"
+                        />
+                      </div>
+                      <div className="relative w-full mb-3">
+                        <label
+                          className="block uppercase text-blueGray-600 text-xs font-bold mb-2"
+                          htmlFor="grid-password"
+                        >
+                          Confirm Password
+                        </label>
+                        <input
+                          type="password"
+                          name="confirmpassword"
+                          ref={confirmPasswordFieldRef}
+                          className="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                          placeholder="Confirm Password"
                         />
                       </div>
 
                       <div className="text-center mt-6">
                         <button
-                          onClick={initiateLogin}
+                          onClick={initiateChangePassword}
                           className={`${
                             isApiCalled
                               ? "bg-white text-wellfedPrimaryBlue border border-wellfedPrimaryBlue pointer-events-none"
@@ -118,22 +141,10 @@ export default function LoginForm() {
                               />
                             </svg>
                           ) : (
-                            "Sign In"
+                            "Reset Password"
                           )}
                         </button>
                       </div>
-                      <div className="forgot-password-label">
-                        <label
-                          className="text-blueGray-500 cursor-pointer"
-                          onClick={() => {
-                            window.location.href +=
-                              "?isForgotPasswordFlow=true";
-                          }}
-                        >
-                          Forgot password?
-                        </label>
-                      </div>
-
                       {errorMessage && (
                         <div className="error-label">
                           <label className="text-red-700">{errorMessage}</label>
