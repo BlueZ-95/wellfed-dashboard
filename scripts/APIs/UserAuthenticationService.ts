@@ -1,17 +1,13 @@
 import { UserAuthenticationEndpoints } from "./APIEndpoints.constants";
+import { Methods } from "./Enums";
 
-export enum Methods {
-  GET,
-  POST,
-}
-
-export class UserAuthentication {
+export class UserAuthenticationService {
   /**
    *
    */
   private constructor() {}
 
-  public static instance = new UserAuthentication();
+  public static instance = new UserAuthenticationService();
 
   async login(emailOrUsername: string, password: string) {
     const res = await fetch(
@@ -107,19 +103,23 @@ export class UserAuthentication {
   }
 
   async isExistingUser(email: string) {
-    const res = await fetch(
-      UserAuthenticationEndpoints.instance.checkExistingUser.replace(
-        "{email}",
-        email
-      ),
-      {
-        method: Methods[Methods.GET],
-      }
-    );
+    try {
+      const res = await fetch(
+        UserAuthenticationEndpoints.instance.checkExistingUser.replace(
+          "{email}",
+          email
+        ),
+        {
+          method: Methods[Methods.GET],
+        }
+      );
 
-    const data = await res.json();
+      const data = await res.json();
 
-    return data.length > 0 ? true : false;
+      return data.length > 0 ? true : false;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async forgotPassword(email: string) {

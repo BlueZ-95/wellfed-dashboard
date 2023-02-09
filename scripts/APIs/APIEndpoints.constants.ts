@@ -2,7 +2,7 @@
 
 export class BaseEndpoints {
   get BaseUrl(): string {
-    return process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:1337";
+    return process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:1338";
   }
 }
 
@@ -62,6 +62,14 @@ export class EnterpriseEndpoints extends BaseEndpoints {
 
   get assignNewUser(): string {
     return `${this.BaseUrl}/api/enrolled-users?filters`;
+  }
+}
+
+export class AdminEndpoints extends BaseEndpoints {
+  static instance = new AdminEndpoints();
+
+  get courseCreation(): string {
+    return `${this.BaseUrl}/api/products`;
   }
 }
 

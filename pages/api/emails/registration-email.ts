@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getRegistrationTemplate } from "../../../lib/email-templates/registration";
-import { UserAuthentication } from "../../../scripts/APIs/UserAuthenticationService";
+import { UserAuthenticationService } from "../../../scripts/APIs/UserAuthenticationService";
 
 interface UserRegistrationProps {
   userName: string;
@@ -29,9 +29,10 @@ export default async function handler(
         isEnterprise: tags === "Enterprise",
       };
 
-      const isExistingUser = await UserAuthentication.instance.isExistingUser(
-        registrationData.email
-      );
+      const isExistingUser =
+        await UserAuthenticationService.instance.isExistingUser(
+          registrationData.email
+        );
 
       // Send Mail
       const sendRegistrationMail = async () => {
@@ -78,7 +79,7 @@ export default async function handler(
         console.info("New user registration request received");
 
         if (!isExistingUser) {
-          await UserAuthentication.instance.register(
+          await UserAuthenticationService.instance.register(
             registrationData.email,
             registrationData.userName,
             registrationData.password,
@@ -92,6 +93,8 @@ export default async function handler(
 
         res.status(200).json(registrationData);
       });
+    } else {
+      res.status(200).send("Success");
     }
   } catch (error) {
     res.status(500).send(error);
